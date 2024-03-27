@@ -1,5 +1,5 @@
 import React from "react";
-import "./planSection.css"
+import "../../assets/styles/planSection.css"
 
 function ThirdBlockHomePage() {
     return (

@@ -1,11 +1,11 @@
 import React from "react";
-import NavHeader from "../components/NavHeader";
-import Logo from "../components/Logo";
-import NavBar from "../components/NavBar";
-import Footer from "../components/Footer";
-import AccordionFAQ from "../components/AccordionFAQ";
+import NavHeader from "../../layout/header/NavHeader";
+import Logo from "../../layout/header/Logo";
+import NavBar from "../../layout/header/NavBar";
+import Footer from "../../layout/Footer";
+import AccordionFAQ from "./AccordionFAQ";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Temporary from "../components/Temporary";
+import Temporary from "../../layout/Temporary";
 
 function FAQ() {
     return (

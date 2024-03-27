@@ -1,10 +1,10 @@
 import React from "react";
-import NavHeader from "../components/NavHeader";
-import Logo from "../components/Logo";
-import NavBar from "../components/NavBar";
-import ContactContent from "../components/ContactContent";
-import Temporary from "../components/Temporary";
-import Footer from "../components/Footer";
+import NavHeader from "../../layout/header/NavHeader";
+import Logo from "../../layout/header/Logo";
+import NavBar from "../../layout/header/NavBar";
+import ContactContent from "./ContactContent";
+import Temporary from "../../layout/Temporary";
+import Footer from "../../layout/Footer";
 
 function Contact() {
     return (

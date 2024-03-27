@@ -1,7 +1,7 @@
-import {TRAINERS} from "../trainersinfo.js";
-import "./trainers.css";
-import phone from "../assets/orangephone.png";
-import mail from "../assets/orangemail.png";
+import {TRAINERS} from "./trainersinfo.js";
+import "../../../assets/styles/trainers.css";
+import phone from "../../../assets/images/orangephone.png";
+import mail from "../../../assets/images/orangemail.png";
 
 function TrainersContent() {
     const trainer = TRAINERS[0];

@@ -1,10 +1,10 @@
 import React from "react";
-import NavHeader from "../components/NavHeader";
-import Logo from "../components/Logo";
-import NavBar from "../components/NavBar";
-import Footer from "../components/Footer";
-import TrainersContent from "../components/TrainersContent";
-import Temporary from "../components/Temporary";
+import NavHeader from "../../layout/header/NavHeader";
+import Logo from "../../layout/header/Logo";
+import NavBar from "../../layout/header/NavBar";
+import Footer from "../../layout/Footer";
+import TrainersContent from "./TrainersContent";
+import Temporary from "../../layout/Temporary";
 
 function Trainers() {
     return (
