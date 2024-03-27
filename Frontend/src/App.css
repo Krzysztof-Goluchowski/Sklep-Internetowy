@@ -72,7 +72,7 @@ a.nav-link:hover{
 
 
 .NiceBackgroundImage{
-    background: url("photos/sukcesToSumaMalychPhoto.jpg") no-repeat center center fixed;
+    background: url("assets/sukcesToSumaMalychPhoto.jpg") no-repeat center center fixed;
     width: 100vw;
     height: 65vh;
     background-size: cover;

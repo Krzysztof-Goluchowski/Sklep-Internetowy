@@ -1,11 +1,11 @@
 import React from 'react';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
-import image_1 from "../photos/image-1.jpg";
-import image_2 from "../photos/image-2.jpg";
-import image_3 from "../photos/image-3.jpg";
-import image_4 from "../photos/image-4.jpg";
-import image_5 from "../photos/image-5.jpg";
+import image_1 from "../assets/image-1.jpg";
+import image_2 from "../assets/image-2.jpg";
+import image_3 from "../assets/image-3.jpg";
+import image_4 from "../assets/image-4.jpg";
+import image_5 from "../assets/image-5.jpg";
 
 const divStyle = {
     display: 'flex',
