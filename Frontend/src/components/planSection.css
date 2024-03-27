@@ -1,0 +1,99 @@
+.main-writing {
+    font-weight: bold;
+    font-size: 80px;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.plans-space {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    height: 100%;
+    width: 100%;
+}
+
+.plan {
+    height: 65%;
+    width: 20%;
+    background: black;
+    margin: auto;
+    padding: 2em;
+    position: relative;
+    transition: background 0.5s ease, height 0.5s ease, width 0.5s ease;
+    overflow: hidden;
+}
+
+.plan-second {
+    height: 65%;
+    width: 20%;
+    background: #3b3b3b;
+    margin: auto;
+    padding: 2em;
+    position: relative;
+    transition: background 0.5s ease, height 0.5s ease, width 0.5s ease;
+    overflow: hidden;
+}
+
+/*.plan:hover {*/
+/*    height: 67%;*/
+/*    width: 22%;*/
+/*    background: #142a10;*/
+/*}*/
+
+.name-of-plan {
+    font-size: 2em;
+    color: white;
+}
+
+.plan-price {
+    color: white;
+    font-size: 3em;
+}
+
+.monthly {
+    font-size: 20px;
+}
+
+.hr-line {
+    color: white;
+}
+
+.list-of-benefits {
+    list-style-type: none;
+}
+
+.item-from-list {
+    font-size: 3.3vh;
+    color: white;
+}
+
+.plan-button-style {
+    height: 100%;
+    width: 60%;
+    background: white;
+    color: black;
+    margin: 20px;
+    transition: background 0.5s ease;
+    font-weight: bold;
+}
+
+.plan-button-style:hover {
+    background: green;
+    color: white;
+}
+
+.best-offer {
+    background-color: #fd5f26;
+    font-size: 1.4rem;
+    font-weight: bold;
+    padding: 0.4em;
+    position: absolute;
+    right: -100px;
+    text-align: center;
+    transform: rotate(35deg);
+    width: 400px;
+}

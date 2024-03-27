@@ -1,0 +1,40 @@
+.buy-writing {
+    font-size: 80px;
+    font-weight: bold;
+}
+
+.product-style {
+    text-align: center;
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 0 0 9px rgba(0, 0, 0, 0.185);
+    transition: box-shadow 0.3s ease;
+}
+
+.product-style:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 1);
+}
+
+.product-photo {
+    height: 45vh;
+    width: 28vh;
+    margin: 10px;
+}
+
+.price {
+    font-size: 30px;
+    margin: 10px;
+}
+
+.button-style {
+    height: 100%;
+    width: 60%;
+    background: black;
+    color: white;
+    margin: 10px;
+    transition: background 0.3s ease;
+}
+
+.button-style:hover {
+    background: green;
+}

@@ -1,0 +1,109 @@
+body{
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+p{
+    margin: 0;
+    align-items: center;
+    text-align: center;
+}
+
+.navHeader{
+    position: fixed;
+    width: 100vw;
+    height: 10vh;
+    display: flex;
+    background-color: #000000;
+    z-index: 11;
+    padding-right: 17px;
+}
+
+a.nav-link{
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: bold;
+    /*border: none;*/
+}
+
+a.nav-link:hover{
+    color: #fd5f26;
+    /*border: none;*/
+}
+
+.nav-tabs{
+    --bs-nav-tabs-border-color: #ffffff;
+    --bs-nav-tabs-link-hover-border-color: #ffffff;
+}
+
+.navButtons{
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.navLogo{
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    float: left;
+}
+
+.logoImage {
+    height: 90%;
+}
+
+.Temporary{
+    height: 10vh;
+}
+
+.SecondBlockHomePage{
+    height: 80vh;
+    width: 100vw;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+.NiceBackgroundImage{
+    background: url("photos/sukcesToSumaMalychPhoto.jpg") no-repeat center center fixed;
+    width: 100vw;
+    height: 65vh;
+    background-size: cover;
+    object-fit: cover;
+    /*background-attachment: fixed;*/
+    font-size: 70px;
+    color: darkgreen;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.react-slideshow-container{
+    height: 100vh;
+}
+
+
+.react-slideshow-wrapper{
+    height: 100vh;
+}
+
+.active{
+    height: 100vh;
+}
+
+.images-wrap{
+    height: 100vh;
+}
+
+.ThirdBlockHomePage{
+    height: 90vh;
+    width: 100vw;
+    background-color: white;
+}
