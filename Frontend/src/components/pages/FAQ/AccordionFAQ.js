@@ -1,6 +1,6 @@
 import React from "react";
 import { Accordion } from 'react-bootstrap'
-import leftImage from "../assets/faqphoto.webp";
+import leftImage from "../../../assets/images/faqphoto.webp";
 
 
 const AccordionFAQ = () => {

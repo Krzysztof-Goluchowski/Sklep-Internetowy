@@ -1,6 +1,6 @@
-import trainer1 from "./assets/trainer1.jpg";
-import trainer2 from "./assets/trainer2.jpg";
-import pudzian from "./assets/pudzian.jpg";
+import trainer1 from "../../../assets/images/trainer1.jpg";
+import trainer2 from "../../../assets/images/trainer2.jpg";
+import pudzian from "../../../assets/images/pudzian.jpg";
 
 export const TRAINERS = [
     {

@@ -1,8 +1,8 @@
-import "./contact.css";
-import phone from "../assets/phone.png";
-import address from "../assets/address.png";
-import mail from "../assets/mail.png";
-import {ADDRESS} from "../address";
+import "../../../assets/styles/contact.css";
+import phone from "../../../assets/images/phone.png";
+import address from "../../../assets/images/address.png";
+import mail from "../../../assets/images/mail.png";
+import {ADDRESS} from "./address";
 
 function ContactContent() {
     return (

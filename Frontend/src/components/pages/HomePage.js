@@ -1,20 +1,20 @@
 import React from "react";
-import '../App.css';
-import NavHeader from "../components/NavHeader";
-import Logo from "../components/Logo";
-import NavBar from "../components/NavBar";
-import Temporary from "../components/Temporary";
-import ImageSlider from "../components/ImageSlider";
-import SecondBlockHomePage from "../components/SecondBlockHomePage";
-import NiceBackgroudImage from "../components/NiceBackgroudImage";
-import ThirdBlockHomePage from "../components/ThirdBlockHomePage";
-import Footer from "../components/Footer";
+import '../../assets/styles/App.css';
+import NavHeader from "../layout/header/NavHeader";
+import Logo from "../layout/header/Logo";
+import NavBar from "../layout/header/NavBar";
+import Temporary from "../layout/Temporary";
+import ImageSlider from "../layout/ImageSlider";
+import SecondBlockHomePage from "../layout/SecondBlockHomePage";
+import NiceBackgroudImage from "../layout/NiceBackgroudImage";
+import ThirdBlockHomePage from "../layout/ThirdBlockHomePage";
+import Footer from "../layout/Footer";
 
-import image_1 from "../assets/image-1.jpg";
-import image_2 from "../assets/image-2.jpg";
-import image_3 from "../assets/image-3.jpg";
-import image_4 from "../assets/image-4.jpg";
-import image_5 from "../assets/image-5.jpg";
+import image_1 from "../../assets/images/image-1.jpg";
+import image_2 from "../../assets/images/image-2.jpg";
+import image_3 from "../../assets/images/image-3.jpg";
+import image_4 from "../../assets/images/image-4.jpg";
+import image_5 from "../../assets/images/image-5.jpg";
 
 function HomePage() {
     const slides = [

@@ -1,7 +1,7 @@
-import product1 from "./assets/Whey1.jpg";
-import product2 from "./assets/whey2.webp";
-import product3 from "./assets/whey3.png";
-import product4 from "./assets/dopalacz.webp";
+import product1 from "../../assets/images/Whey1.jpg";
+import product2 from "../../assets/images/whey2.webp";
+import product3 from "../../assets/images/whey3.png";
+import product4 from "../../assets/images/dopalacz.webp";
 
 export const PRODUCTS = [
     {

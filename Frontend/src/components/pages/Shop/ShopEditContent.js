@@ -1,5 +1,5 @@
-import "./shop.css";
-import {PRODUCTS} from "../products";
+import "../../../assets/styles/shop.css";
+import {PRODUCTS} from "../../common/products";
 import React, {useContext, useState} from "react";
 import {Link} from "react-router-dom";
 

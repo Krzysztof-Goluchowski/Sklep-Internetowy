@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import { ShoppingCart } from 'phosphor-react';
-import {ShopContextProvider} from "./shop-context";
+import {ShopContextProvider} from "../../pages/Shop/shop-context";
 function NavBar() {
     return (
         <>

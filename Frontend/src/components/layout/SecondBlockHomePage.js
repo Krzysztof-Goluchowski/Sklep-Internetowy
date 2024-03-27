@@ -1,9 +1,9 @@
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import {ShopContext} from "./shop-context";
-import { PRODUCTS } from "../products";
+import {ShopContext} from "../pages/Shop/shop-context";
+import { PRODUCTS } from "../common/products";
 import React, {useContext} from "react";
-import "./miniShop.css"
+import "../../assets/styles/miniShop.css"
 
 
 

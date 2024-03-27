@@ -1,7 +1,7 @@
-import "./shop.css";
-import {PRODUCTS} from "../products";
+import "../../../assets/styles/shop.css";
+import {PRODUCTS} from "../../common/products";
 import {ShopContext} from "./shop-context";
-import chad from "../assets/chadquote2.png";
+import chad from "../../../assets/images/chadquote2.png";
 import React, {useContext, useState} from "react";
 import {Link} from "react-router-dom";
 
