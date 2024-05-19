@@ -25,7 +25,7 @@ function HomePage() {
 
     const fetchEmployeeName = async () => {
         try {
-            const response = await fetch('http://localhost:8080/api/employees/2'); // Endpoint API do pobrania danych pracownika o id = 2
+            const response = await fetch('http://localhost:8080/api/employees/2');
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
