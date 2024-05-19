@@ -2,8 +2,6 @@ package org.krzystian.backend.controller;
 
 import lombok.AllArgsConstructor;
 import org.krzystian.backend.dto.EmployeeDto;
-import org.krzystian.backend.entity.Employee;
-import org.krzystian.backend.exception.ResourceNotFoundException;
 import org.krzystian.backend.service.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
