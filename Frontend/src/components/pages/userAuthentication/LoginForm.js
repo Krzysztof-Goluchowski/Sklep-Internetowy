@@ -1,21 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import leftImage from "../../../assets/styles/LoginForm.css";
 import { FaUser, FaLock } from "react-icons/fa";
 import {Link} from "react-router-dom";
-import Register from "./Register";
+import axios from 'axios';
 
 function LoginForm() {
+    const [email, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('http://localhost:8080/users/login', {
+                email: email,
+                password: password
+            });
+            alert(response.data);
+        } catch (error) {
+            alert(error.response.data);
+        }
+    };
     return (
         <>
             <div className="loginSpace">
                 <div className="wrapper">
-                    <form action="">
+                    <form onSubmit={handleSubmit}>
                         <div className="input-box">
-                            <input type="text" placeholder="Username" required/>
+                            <input type="text" placeholder="Email" required value={email}
+                                   onChange={(e) => setUsername(e.target.value)}/>
                             <FaUser className='icon' />
                         </div>
                         <div className="input-box">
-                            <input type="text" placeholder="Password" required/>
+                            <input type="text" placeholder="Password" required value={password}
+                                   onChange={(e) => setPassword(e.target.value)}/>
                             <FaLock className='icon' />
                         </div>
 

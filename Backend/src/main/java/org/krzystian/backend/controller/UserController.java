@@ -50,4 +50,14 @@ public class UserController {
         userService.deleteUser(userId);
         return ResponseEntity.ok("User deleted successfully!");
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> loginUser(@RequestBody UserDto userDto){
+        boolean isAuthenticated = userService.authenticateUser(userDto);
+        if (isAuthenticated){
+            return ResponseEntity.ok("Zalogowano pomyslnie");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Zły login lub hasło");
+        }
+    }
 }
