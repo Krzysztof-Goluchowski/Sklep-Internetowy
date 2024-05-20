@@ -10,6 +10,7 @@ import org.krzystian.backend.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,5 +63,11 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User with given id don't exists"));
 
         userRepository.deleteById(userId);
+    }
+
+    @Override
+    public Boolean authenticateUser(UserDto userDto) {
+        User user = userRepository.findByEmail(userDto.getEmail());
+        return user != null && Objects.equals(user.getPassword(), userDto.getPassword());
     }
 }
