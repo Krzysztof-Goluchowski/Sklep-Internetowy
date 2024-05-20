@@ -10,6 +10,9 @@ import HomePage from './components/pages/HomePage';
 import Shop from './components/pages/Shop/Shop';
 import Trainers from './components/pages/Trainers/Trainers';
 import ShopEdit from './components/pages/Shop/ShopEdit';
+import Login from './components/pages/userAuthentication/Login';
+import Register from './components/pages/userAuthentication/Register';
+
 import { ShopContextProvider } from './components/pages/Shop/shop-context';
 
 function App() {
@@ -23,6 +26,8 @@ function App() {
                 <Route path="shop" element={<Shop />} />
                 <Route path="trainers" element={<Trainers />} />
                 <Route path="shop/edit" element={<ShopEdit />} />
+                <Route path="login" element={<Login />} />
+                <Route path="register" element={<Register />} />
             </Routes>
         </ShopContextProvider>
     );
