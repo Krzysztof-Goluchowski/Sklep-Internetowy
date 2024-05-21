@@ -70,4 +70,10 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(userDto.getEmail());
         return user != null && Objects.equals(user.getPassword(), userDto.getPassword());
     }
+
+    @Override
+    public Boolean doesExist(UserDto userDto) {
+        User user = userRepository.findByEmail(userDto.getEmail());
+        return user != null;
+    }
 }

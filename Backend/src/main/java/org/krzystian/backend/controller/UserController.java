@@ -63,7 +63,12 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody UserDto newUser) {
-        userService.createUser(newUser);
-        return ResponseEntity.ok("Zarejestrowano pomyslnie\nWitaj " + newUser.getFirstName() + "!");
+        boolean doesExist = userService.doesExist(newUser);
+        if (!doesExist){
+            userService.createUser(newUser);
+            return ResponseEntity.ok("Zarejestrowano pomyslnie\nWitaj " + newUser.getFirstName() + "!");
+        }
+        return ResponseEntity.ok("Użytkownik z podanym Email już istnieje! Zaloguj się.");
+
     }
 }
