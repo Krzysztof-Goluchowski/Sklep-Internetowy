@@ -1,3 +1,4 @@
+import React from 'react';
 import "../../../assets/styles/contact.css";
 import phone from "../../../assets/images/phone.png";
 import address from "../../../assets/images/address.png";

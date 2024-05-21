@@ -2,6 +2,7 @@ import {TRAINERS} from "./trainersinfo.js";
 import "../../../assets/styles/trainers.css";
 import phone from "../../../assets/images/orangephone.png";
 import mail from "../../../assets/images/orangemail.png";
+import React from 'react';
 
 function TrainersContent() {
     const trainer = TRAINERS[0];

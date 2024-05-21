@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import axios from 'axios';
 
 function LoginForm() {
-    const [email, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleSubmit = async (e) => {
@@ -26,12 +26,12 @@ function LoginForm() {
                 <div className="wrapper">
                     <form onSubmit={handleSubmit}>
                         <div className="input-box">
-                            <input type="text" placeholder="Email" required value={email}
-                                   onChange={(e) => setUsername(e.target.value)}/>
+                            <input type="text" placeholder="Email" required
+                                   onChange={(e) => setEmail(e.target.value)}/>
                             <FaUser className='icon' />
                         </div>
                         <div className="input-box">
-                            <input type="text" placeholder="Password" required value={password}
+                            <input type="text" placeholder="Password" required
                                    onChange={(e) => setPassword(e.target.value)}/>
                             <FaLock className='icon' />
                         </div>
