@@ -1,6 +1,7 @@
 package org.krzystian.backend.service;
 
 import org.krzystian.backend.dto.UserDto;
+import org.krzystian.backend.entity.User;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface UserService {
     void deleteUser(Long userId);
 
     Boolean authenticateUser(UserDto userDto);
+
+    Boolean doesExist(UserDto userDto);
 }
