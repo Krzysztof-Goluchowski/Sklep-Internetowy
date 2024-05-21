@@ -55,7 +55,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void deleteEployee(Long employeeId) {
+    public void deleteEmployee(Long employeeId) {
         Employee employee = employeeRepository.findById(employeeId).orElseThrow(() ->
                 new ResourceNotFoundException("Employee with gicen ID does not exists"));
 

@@ -60,4 +60,10 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Zły login lub hasło");
         }
     }
+
+    @PutMapping("/register")
+    public ResponseEntity<String> registerUser(@RequestBody UserDto newUser) {
+        userService.createUser(newUser);
+        return ResponseEntity.ok("Zarejestrowano pomyslnie\nWitaj " + newUser.getFirstName() + "!");
+    }
 }
