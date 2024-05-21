@@ -47,7 +47,7 @@ function LoginForm() {
                             <FaUser className='icon' />
                         </div>
                         <div className="input-box">
-                            <input type="text" placeholder="Password" required
+                            <input type="password" placeholder="Password" required
                                    onChange={(e) => setPassword(e.target.value)}/>
                             <FaLock className='icon' />
                         </div>
