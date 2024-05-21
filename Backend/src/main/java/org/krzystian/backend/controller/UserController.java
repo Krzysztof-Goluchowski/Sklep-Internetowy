@@ -61,7 +61,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("/register")
+    @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody UserDto newUser) {
         userService.createUser(newUser);
         return ResponseEntity.ok("Zarejestrowano pomyslnie\nWitaj " + newUser.getFirstName() + "!");

@@ -13,7 +13,7 @@ function LoginForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.put('http://localhost:8080/users/register', {
+            const response = await axios.post('http://localhost:8080/users/register', {
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
