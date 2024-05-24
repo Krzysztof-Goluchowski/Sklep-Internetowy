@@ -1,19 +1,21 @@
 import "../../../assets/styles/shop.css";
-import {PRODUCTS} from "../../common/products";
 import React, {useContext, useState} from "react";
 import {Link} from "react-router-dom";
+import useProductsHook from "../../common/useProductsHook";
 
 function ShopContentEdit() {
     const [editingIndex, setEditingIndex] = useState(-1);
     const [editedPrice, setEditedPrice] = useState("");
 
+    const products = useProductsHook();
+
     const handleEditClick = (index) => {
         setEditingIndex(index);
-        setEditedPrice(PRODUCTS[index].price);
+        setEditedPrice(products[index].price);
     };
 
     const handleSaveClick = () => {
-        PRODUCTS[editingIndex].price = editedPrice;
+        products[editingIndex].price = editedPrice;
         setEditingIndex(-1);
     };
 
@@ -23,9 +25,9 @@ function ShopContentEdit() {
 
     return (<div className="shopEditContainer">
         <div className={"shopProducts"}>
-            {PRODUCTS.map((product, index) => (
+            {products.map((product, index) => (
                 <div key={product.id} className="productShop">
-                    <img src={product.productImage} alt={product.productName} className="productPhoto"/>
+                    <img src={`data:image/png;base64,${product.image}`} alt={product.productName} className="productPhoto"/>
                     <p className="price">{product.productName}</p>
                     <p>Initial price: </p>
                     <p className="price">{`$${product.initialPrice}`}</p>

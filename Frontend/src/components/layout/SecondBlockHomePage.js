@@ -1,7 +1,6 @@
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import {ShopContext} from "../pages/Shop/shop-context";
-import { PRODUCTS } from "../common/products";
 import React, {useContext} from "react";
 import "../../assets/styles/miniShop.css"
 
@@ -27,7 +26,7 @@ function SecondBlockHomePage() {
         }
     };
 
-    const { addToCart, cartItems } = useContext(ShopContext);
+    const { products, addToCart, cartItems } = useContext(ShopContext);
 
     return (
         <>
@@ -35,14 +34,14 @@ function SecondBlockHomePage() {
             <div className="SecondBlockHomePage hidden">
 
                 <Carousel responsive={responsive}>
-                    {PRODUCTS.map((product) => (
+                    {products.map((product) => (
                         <div key={product.id} className="product-style">
-                            <img src={product.productImage} alt={product.productName} className="product-photo" />
+                            <img src={`data:image/png;base64,${product.image}`} alt={product.productName} className="product-photo" />
                             <p className="price">{product.productName}</p>
                             <p className="price">{`$${product.price}`}</p>
                             <p>
                                 <button className="button-style" onClick={() => addToCart(product.id)}>
-                                    Add to Cart {cartItems[product.id] > 0 && <> ({cartItems[product.id]}) </>}
+                                    Add to Cart {cartItems.get(product.id) > 0 && <> ({cartItems.get(product.id)}) </>}
                                  </button>
                             </p>
                         </div>

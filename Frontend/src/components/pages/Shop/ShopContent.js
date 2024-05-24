@@ -4,24 +4,12 @@ import {ShopContext} from "./shop-context";
 import chad from "../../../assets/images/chadquote2.png";
 import React, {useContext, useState, useEffect} from "react";
 import {Link} from "react-router-dom";
-import axios from "axios";
 
 function ShopContent() {
     const categories = ["Wszystko", "Białko", "Dopalacze"];
     const [selectedCategory, setSelectedCategory] = useState("Wszystko");
-    const [products, setProducts] = useState([]);
 
-    const { addToCart, cartItems } = useContext(ShopContext);
-
-    useEffect(() => {
-        axios.get("http://localhost:8080/products/all")
-            .then(response => {
-                setProducts(response.data);
-            })
-            .catch(error => {
-                console.error("There was an error fetching the products!", error);
-            });
-    }, []);
+    const { products, addToCart, cartItems } = useContext(ShopContext);
 
     const handleCategoryClick = (category) => {
         setSelectedCategory(category);
@@ -58,7 +46,7 @@ function ShopContent() {
                     <p className="price">{product.name}</p>
                     {
                         product.price >= product.initialPrice ? (
-                            <p className="price">{`$${product.price}`}</p>
+                            <p className="price">{`$${product.initialPrice}`}</p>
                         ) : (
                             <>
                                 <div className="priceContainer">
@@ -73,7 +61,7 @@ function ShopContent() {
                     }
                     <p>
                         <button className="cartButton" onClick={() => addToCart(product.id)}>
-                            Add to Cart {cartItems[product.id] > 0 && <> ({cartItems[product.id]}) </>}
+                            Add to Cart {cartItems.get(product.id) > 0 && <> ({cartItems.get(product.id)}) </>}
                         </button>
                     </p>
                 </div>
