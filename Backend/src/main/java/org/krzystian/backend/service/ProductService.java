@@ -15,5 +15,5 @@ public interface ProductService {
 
     void deleteProduct(Long productId);
 
-    ProductDto setImage(Long productId, String path);
+    ProductDto updateProductPrice(Long productId, double price);
 }

@@ -1,11 +1,21 @@
-import React, {createContext, useState} from "react";
+import React, {createContext, useEffect, useState} from "react";
 import useProductsHook from "../../common/useProductsHook";
+import axios from "axios";
 
 export const ShopContext = createContext(null);
 
 export const ShopContextProvider = (props) => {
     const [cartItems, setCartItems] = useState(new Map());
-    const products = useProductsHook();
+    const [products, setProducts] = useState([]);
+
+    const fetchProducts = async () => {
+        try {
+            const response = await axios.get("http://localhost:8080/products/all");
+            setProducts(response.data);
+        } catch (error) {
+            console.error("There was an error fetching the products!", error);
+        }
+    };
 
     const getTotalCartAmount = () => {
         let totalAmount = 0;
@@ -47,7 +57,7 @@ export const ShopContextProvider = (props) => {
         });
     };
 
-    const contextValue = {products, cartItems, addToCart, removeFromCart, updateCartItemCount, getTotalCartAmount}
+    const contextValue = {products, cartItems, addToCart, removeFromCart, updateCartItemCount, getTotalCartAmount, fetchProducts}
 
     return (
         <ShopContext.Provider value={contextValue}>

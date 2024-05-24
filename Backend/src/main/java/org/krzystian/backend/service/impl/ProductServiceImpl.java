@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.ReadOnlyBufferException;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -67,22 +68,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto setImage(Long productId, String path) {
+    public ProductDto updateProductPrice(Long productId, double price) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Product with given ID doesn't exist!"));
 
-        try {
-            File file = new File(path);
-            byte[] image = Files.readAllBytes(file.toPath());
+        product.setPrice(price);
 
-            Product product = productRepository.findById(productId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Product with given ID doesn't exist"));
-            product.setImage(image);
+        Product savedProduct = productRepository.save(product);
 
-            Product savedProduct = productRepository.save(product);
-
-            return ProductMapper.mapToProductDto(savedProduct);
-        } catch (IOException e) {
-            throw new ResourceNotFoundException("Error with reading the file at path: " + path);
-        }
-
+        return ProductMapper.mapToProductDto(savedProduct);
     }
 }

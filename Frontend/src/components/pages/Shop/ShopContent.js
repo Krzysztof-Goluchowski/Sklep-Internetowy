@@ -9,7 +9,11 @@ function ShopContent() {
     const categories = ["Wszystko", "Białko", "Dopalacze"];
     const [selectedCategory, setSelectedCategory] = useState("Wszystko");
 
-    const { products, addToCart, cartItems } = useContext(ShopContext);
+    const { products, addToCart, cartItems, fetchProducts } = useContext(ShopContext);
+
+    useEffect(() => {
+        fetchProducts();
+    }, []);
 
     const handleCategoryClick = (category) => {
         setSelectedCategory(category);
