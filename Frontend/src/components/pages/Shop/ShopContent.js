@@ -1,15 +1,19 @@
 import "../../../assets/styles/shop.css";
-import {PRODUCTS} from "../../common/products";
+// import {PRODUCTS} from "../../common/products";
 import {ShopContext} from "./shop-context";
 import chad from "../../../assets/images/chadquote2.png";
-import React, {useContext, useState} from "react";
+import React, {useContext, useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 
 function ShopContent() {
     const categories = ["Wszystko", "Białko", "Dopalacze"];
     const [selectedCategory, setSelectedCategory] = useState("Wszystko");
 
-    const { addToCart, cartItems } = useContext(ShopContext);
+    const { products, addToCart, cartItems, fetchProducts } = useContext(ShopContext);
+
+    useEffect(() => {
+        fetchProducts();
+    }, []);
 
     const handleCategoryClick = (category) => {
         setSelectedCategory(category);
@@ -17,8 +21,8 @@ function ShopContent() {
 
     const filteredProducts =
         selectedCategory === "Wszystko"
-            ? PRODUCTS
-            : PRODUCTS.filter((product) => product.category === selectedCategory);
+            ? products
+            : products.filter((product) => product.category === selectedCategory);
 
     const calculateDiscountPercentage = (initialPrice, discountedPrice) => {
         const discount = initialPrice - discountedPrice;
@@ -42,11 +46,11 @@ function ShopContent() {
         <div className={"shopProducts"}>
             {filteredProducts.map((product) => (
                 <div key={product.id} className="productShop">
-                    <img src={product.productImage} alt={product.productName} className="productPhoto"/>
-                    <p className="price">{product.productName}</p>
+                    <img src={`data:image/png;base64,${product.image}`} alt={product.name} className="productPhoto"/>
+                    <p className="price">{product.name}</p>
                     {
                         product.price >= product.initialPrice ? (
-                            <p className="price">{`$${product.price}`}</p>
+                            <p className="price">{`$${product.initialPrice}`}</p>
                         ) : (
                             <>
                                 <div className="priceContainer">
@@ -61,7 +65,7 @@ function ShopContent() {
                     }
                     <p>
                         <button className="cartButton" onClick={() => addToCart(product.id)}>
-                            Add to Cart {cartItems[product.id] > 0 && <> ({cartItems[product.id]}) </>}
+                            Add to Cart {cartItems.get(product.id) > 0 && <> ({cartItems.get(product.id)}) </>}
                         </button>
                     </p>
                 </div>
