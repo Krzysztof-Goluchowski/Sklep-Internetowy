@@ -76,4 +76,10 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(userDto.getEmail());
         return user != null;
     }
+
+    @Override
+    public boolean isEmployee(String email) {
+        User user = userRepository.findByEmail(email);
+        return user.getIsEmployee();
+    }
 }

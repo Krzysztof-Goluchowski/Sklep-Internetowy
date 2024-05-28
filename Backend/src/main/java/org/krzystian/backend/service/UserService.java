@@ -19,4 +19,6 @@ public interface UserService {
     Boolean authenticateUser(UserDto userDto);
 
     Boolean doesExist(UserDto userDto);
+
+    boolean isEmployee(String email);
 }

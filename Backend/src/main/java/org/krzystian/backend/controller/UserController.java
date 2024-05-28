@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor
 @RestController
@@ -47,12 +49,17 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody UserDto userDto){
+    public ResponseEntity<Map<String, Object>> loginUser(@RequestBody UserDto userDto){
+        boolean isEmployee = false;
         boolean isAuthenticated = userService.authenticateUser(userDto);
         if (isAuthenticated){
-            return ResponseEntity.ok("Zalogowano pomyslnie");
+            isEmployee = userService.isEmployee(userDto.getEmail());
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Zalogowano pomyślnie!");
+            response.put("isEmployee", isEmployee);
+            return ResponseEntity.ok(response);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Zły login lub hasło");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
 

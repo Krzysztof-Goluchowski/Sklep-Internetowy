@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import leftImage from "../../../assets/styles/LoginForm.css";
 import { FaUser, FaLock } from "react-icons/fa";
 import {Link} from "react-router-dom";
 import axios from 'axios';
@@ -15,11 +14,15 @@ function LoginForm() {
                 email: email,
                 password: password
             });
-            alert(response.data);
+            const { message, isEmployee } = response.data;
+            alert(message);
+            localStorage.setItem('isLoggedIn', true);
+            localStorage.setItem('isEmployee', isEmployee);
         } catch (error) {
             alert(error.response.data);
         }
     };
+    
     return (
         <>
             <div className="loginSpace">

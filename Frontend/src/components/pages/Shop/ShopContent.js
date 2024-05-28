@@ -17,6 +17,8 @@ function ShopContent() {
 
     useEffect(() => {
         fetchProducts();
+        console.log(localStorage.getItem('isLoggedIn'))
+        console.log(localStorage.getItem('isEmployee'))
     }, [fetchProducts]);
 
     const handleCategoryClick = (category) => {

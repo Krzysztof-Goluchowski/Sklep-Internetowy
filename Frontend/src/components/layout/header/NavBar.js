@@ -1,8 +1,13 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import { ShoppingCart } from 'phosphor-react';
-import {ShopContextProvider} from "../../pages/Shop/shop-context";
 function NavBar() {
+
+    const handleLogout = () => {
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('isEmployee');
+    };
+
     return (
         <>
             <div className="navButtons">
@@ -15,9 +20,15 @@ function NavBar() {
                         <li className="nav-item">
                             <Link className="nav-link" to="/Shop">Shop</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/Login">Login</Link>
-                        </li>
+                        {localStorage.getItem('isLoggedIn') ? (
+                            <li className="nav-item">
+                                <Link className="nav-link" onClick={handleLogout} to="/Login">Logout</Link>
+                            </li>
+                        ) : (
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/Login">Login</Link>
+                            </li>
+                        )}
                         <li className="nav-item">
                             <Link className="nav-link" to="/Trainers">Trainers</Link>
                         </li>
