@@ -19,7 +19,7 @@ public class Product {
     @Column(name = "product_id")
     private Long id;
 
-    @Column(name = "product_category_id")
+    @Column(name = "category_id")
     private Long categoryID;
 
     @Column(name = "name")
