@@ -1,7 +1,6 @@
 import "../../../assets/styles/shop.css";
 import React, {useContext, useEffect, useState} from "react";
 import {Link} from "react-router-dom";
-import useProductsHook from "../../common/useProductsHook";
 import axios from "axios";
 import {ShopContext} from "./shop-context";
 
