@@ -30,7 +30,7 @@ function LoginForm() {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            alert(response.data);
+            alert("DODANO!");
         } catch (error) {
             alert(error.response.data);
         }

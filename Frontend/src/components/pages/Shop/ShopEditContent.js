@@ -22,6 +22,19 @@ function ShopContentEdit() {
         setEditedPrice(product.price);
     };
 
+    const handleDeleteClick = async (productId) => {
+        try {
+            const response = await axios.delete(`http://localhost:8080/products/${productId}`);
+            const message = response.data;
+            alert(message);
+            window.location.reload();
+        } catch (error) {
+            alert(error.response.data);
+        }
+
+
+    };
+
     const handleSaveClick = () => {
         // products[editingIndex].price = editedPrice;
         const newPrice = parseFloat(editedPrice);
@@ -74,7 +87,10 @@ function ShopContentEdit() {
                             <button onClick={handleCancelClick}>Anuluj</button>
                         </>
                     ) : (
-                        <button onClick={() => handleEditClick(product.id)}>Edytuj</button>
+                        <>
+                            <button onClick={() => handleEditClick(product.id)}>Edytuj</button>
+                            <button onClick={() => handleDeleteClick(product.id)}>Usuń</button>
+                        </>
                     )}
                 </div>
             ))}
