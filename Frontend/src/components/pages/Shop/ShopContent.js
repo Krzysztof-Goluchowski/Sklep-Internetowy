@@ -13,12 +13,17 @@ function ShopContent() {
     ];
     const [selectedCategory, setSelectedCategory] = useState("Wszystko");
 
+    const [isEmployee, setIsEmployee] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
     const { products, addToCart, cartItems, fetchProducts } = useContext(ShopContext);
 
     useEffect(() => {
         fetchProducts();
         console.log(localStorage.getItem('isLoggedIn'))
         console.log(localStorage.getItem('isEmployee'))
+        setIsEmployee(localStorage.getItem('isEmployee') === 'true');
+        setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
     }, [fetchProducts]);
 
     const handleCategoryClick = (category) => {
@@ -66,14 +71,17 @@ function ShopContent() {
                             </>
                         )}
                         <p>
-                            <button className="cartButton" onClick={() => addToCart(product.id)}>
-                                Add to Cart {cartItems.get(product.id) > 0 && <> ({cartItems.get(product.id)}) </>}
-                            </button>
+                            {
+                                isLoggedIn &&
+                                <button className="cartButton" onClick={() => addToCart(product.id)}>
+                                    Add to Cart {cartItems.get(product.id) > 0 && <> ({cartItems.get(product.id)}) </>}
+                                </button>
+                            }
                         </p>
                     </div>
                 ))}
             </div>
-            <Link className="cartButton" to="/Shop/Edit">EDIT</Link>
+            {isEmployee && <Link className="cartButton" to="/Shop/Edit">EDIT</Link>}
         </div>
     );
 }

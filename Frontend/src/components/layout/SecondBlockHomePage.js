@@ -40,9 +40,13 @@ function SecondBlockHomePage() {
                             <p className="price">{product.productName}</p>
                             <p className="price">{`$${product.price}`}</p>
                             <p>
-                                <button className="button-style" onClick={() => addToCart(product.id)}>
-                                    Add to Cart {cartItems.get(product.id) > 0 && <> ({cartItems.get(product.id)}) </>}
-                                 </button>
+                                {
+                                    localStorage.getItem('isLoggedIn') === 'true' &&
+                                    <button className="button-style" onClick={() => addToCart(product.id)}>
+                                        Add to Cart {cartItems.get(product.id) > 0 && <> ({cartItems.get(product.id)}) </>}
+                                    </button>
+                                }
+
                             </p>
                         </div>
                     ))}
