@@ -82,6 +82,7 @@ function ShopContent() {
                 ))}
             </div>
             {isEmployee && <Link className="cartButton" to="/Shop/Edit">EDIT</Link>}
+            {isEmployee && <Link className="cartButton" to="/Shop/Add">Add Product</Link>}
         </div>
     );
 }
