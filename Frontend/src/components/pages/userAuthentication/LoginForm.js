@@ -22,7 +22,7 @@ function LoginForm() {
             alert(error.response.data);
         }
     };
-    
+
     return (
         <>
             <div className="loginSpace">
