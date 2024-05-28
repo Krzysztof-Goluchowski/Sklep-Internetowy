@@ -33,12 +33,5 @@ function App() {
     );
 }
 
-ReactDOM.render(
-    <Router>
-        <App />
-    </Router>,
-    document.getElementById('root')
-);
-
 reportWebVitals();
 export default App;
