@@ -38,9 +38,12 @@ function NavBar() {
                         <li className="nav-item">
                             <Link className="nav-link" to="/Contact">Contact</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/Cart"><ShoppingCart size={30}/> </Link>
-                        </li>
+                        {localStorage.getItem('isLoggedIn') === 'true' &&
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/Cart"><ShoppingCart size={30}/> </Link>
+                            </li>
+                        }
+
 
                     </ul>
 
