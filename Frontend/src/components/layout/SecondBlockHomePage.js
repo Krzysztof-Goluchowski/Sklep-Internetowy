@@ -7,6 +7,8 @@ import "../../assets/styles/miniShop.css"
 
 
 function SecondBlockHomePage() {
+    const { products, addToCart, cartItems, fetchProducts } = useContext(ShopContext);
+
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },

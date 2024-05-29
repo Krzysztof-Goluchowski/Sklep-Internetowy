@@ -7,7 +7,9 @@ import org.krzystian.backend.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @AllArgsConstructor
@@ -17,8 +19,25 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
 
-    @PostMapping
-    public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto){
+    @PostMapping("/add")
+    public ResponseEntity<ProductDto> createProduct(@RequestParam("image") MultipartFile image,
+                                                    @RequestParam("category_id") Long categoryId,
+                                                    @RequestParam("name") String name,
+                                                    @RequestParam("price") double price,
+                                                    @RequestParam("initial_price") double initialPrice) {
+        System.out.println(categoryId + " " + name + " " + price + " " + initialPrice);
+        ProductDto productDto = new ProductDto();
+        productDto.setCategoryID(categoryId);
+        productDto.setName(name);
+        productDto.setPrice(price);
+        productDto.setInitialPrice(initialPrice);
+        try {
+            productDto.setImage(image.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
         ProductDto savedProduct = productService.createProduct(productDto);
         return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
     }

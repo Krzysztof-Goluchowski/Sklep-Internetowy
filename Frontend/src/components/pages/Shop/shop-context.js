@@ -28,15 +28,6 @@ export const ShopContextProvider = (props) => {
         }
     };
 
-    // const fetchProductsWithCategory = async (category) => {
-    //     try {
-    //         const response = await axios.get("http://localhost:8080/products/${category}");
-    //         setProducts(response.data);
-    //     } catch (error) {
-    //         console.error("There was an error fetching the products!", error);
-    //     }
-    // };
-
     const getCartItemQuantity = (productId) => {
         const item = cartItems.find(cartItem => cartItem.productId === productId);
         return item ? item.quantity : 0;
@@ -56,12 +47,6 @@ export const ShopContextProvider = (props) => {
     };
 
     const addToCart = (id) => {
-        // setCartItems2((prev) => {
-        //     const newCart = new Map(prev);
-        //     newCart.set(id, (newCart.get(id) || 0) + 1);
-        //     return newCart;
-        // });
-
         try {
             console.log("wysylam " + parseInt(localStorage.getItem('loggedUserId')))
             console.log("wysylam " + id)
@@ -96,8 +81,23 @@ export const ShopContextProvider = (props) => {
         });
     };
 
+    const fetchCategories = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/categories/all');
+            const data = await response.json();
+            const categoriesArray = Object.entries(data).map(([name, id]) => ({
+                name: name,
+                id: id
+            }));
+            return [{ name: "Wszystko", id: null }, ...categoriesArray];
+        } catch (error) {
+            console.error("Failed to fetch categories:", error);
+        }
+    };
+
+
     const contextValue = {products, cartItems, addToCart, removeFromCart, updateCartItemCount, getTotalCartAmount,
-        fetchProducts, fetchCartItems, getCartItemQuantity}
+        fetchProducts, fetchCartItems, fetchCategories, getCartItemQuantity}
 
     return (
         <ShopContext.Provider value={contextValue}>
