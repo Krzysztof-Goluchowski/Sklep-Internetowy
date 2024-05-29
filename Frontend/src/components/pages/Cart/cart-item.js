@@ -1,20 +1,37 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {ShopContext} from "../Shop/shop-context";
 
 export const CartItem = (props) => {
-    const {id, name, price, image} = props.data;
-    const {cartItems, addToCart, removeFromCart, updateCartItemCount} = useContext(ShopContext);
+
+    const {productId, quantity} = props.data;
+    const {products, addToCart, removeFromCart, fetchCartItems, updateCartItemCount} = useContext(ShopContext);
+    const [localQuantity, setLocalQuantity] = useState(Number(quantity));
+
+    const product = products.find(product => product.id === productId);
+
+    useEffect(() => {
+        fetchCartItems();
+    }, []);
 
     return (
         <div className="cartItem">
-            <img src={`data:image/png;base64,${image}`}/>
+            <img src={`data:image/png;base64,${product.image}`}/>
             <div className="description">
-                <p><b>{name}</b></p>
-                <p>${price}</p>
+                <p><b>{product.name}</b></p>
+                <p>${product.price}</p>
                 <div className="countHandler">
-                    <button onClick={() => removeFromCart(id)}> - </button>
-                    <input value={cartItems.get(id)} onChange={(e) => updateCartItemCount(Number(e.target.value), id)}/>
-                    <button onClick={() => addToCart(id)}> + </button>
+                    <button onClick={() => {
+                        removeFromCart(product.id);
+                        fetchCartItems();
+                    }}> - </button>
+                    <input value={localQuantity} onChange={(e) => {
+                        updateCartItemCount(Number(e.target.value), product.id);
+                        fetchCartItems();
+                    }}/>
+                    <button onClick={() => {
+                         addToCart(product.id);
+                         setLocalQuantity(localQuantity + 1);
+                    }}> + </button>
                 </div>
             </div>
         </div>

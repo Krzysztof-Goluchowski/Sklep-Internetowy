@@ -35,21 +35,13 @@ public class CartDetailsServiceImpl implements CartDetailsService {
 
     @Override
     public CartDetailsDto addProduct(Long userId, Long productId) {
-        System.out.println("haloh laoahoshlahsodahsld\nhsdahjsdas\nahsdjkas\n\n\n\n\n\nasdasd\nasda\n\n\n");
-
-
-        System.out.println("asbdhasbd" + (userId == null));
-
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User with given id doesn't exist!"));
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product with given id doesn't exist!"));
 
-//        CartDetailsId cartId = new CartDetailsId(user, product);
         CartDetailsId cartId = new CartDetailsId(user.getId(), product.getId());
 
-//        CartDetails cartDetails = cartDetailsRepository.findById(cartId)
-//                .orElse(new CartDetails(cartId, 0));
         CartDetails cartDetails = cartDetailsRepository.findById(cartId)
                 .orElse(new CartDetails(cartId, user, product, 0));
 
@@ -72,13 +64,9 @@ public class CartDetailsServiceImpl implements CartDetailsService {
 
     @Override
     public List<CartDetailsDto> getCartDetailsByUserId(Long userId) {
-        System.out.println("AAAAAAAAAAAAAAAAAA\nAAAAAAAAAAAAAAA\n");
-
         List<CartDetailsDto> allCartDetailsDto =  cartDetailsRepository.findByCartIdUserId(userId).stream()
                 .map(CartDetailsMapper::mapToCartDetailsDto)
                 .toList();
-
-        System.out.println("A" + allCartDetailsDto.get(0));
 
         return allCartDetailsDto;
     }

@@ -14,9 +14,6 @@ import org.krzystian.backend.dto.UserDto;
 @AllArgsConstructor
 
 public class CartDetailsIdDto {
-//    private UserDto userDto;
-//    private ProductDto productDto;
-
     private Long userId;
     private Long productId;
 }

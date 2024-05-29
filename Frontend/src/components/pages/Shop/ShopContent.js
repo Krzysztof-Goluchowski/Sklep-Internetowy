@@ -16,15 +16,17 @@ function ShopContent() {
     const [isEmployee, setIsEmployee] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const { products, addToCart, cartItems, fetchProducts, getCartItemQuantity } = useContext(ShopContext);
+    const { products, addToCart, cartItems, fetchProducts, fetchCartItems, getCartItemQuantity } = useContext(ShopContext);
 
     useEffect(() => {
         fetchProducts();
+        fetchCartItems();
         console.log(localStorage.getItem('isLoggedIn'))
         console.log(localStorage.getItem('isEmployee'))
         setIsEmployee(localStorage.getItem('isEmployee') === 'true');
         setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
     }, []);
+
 
     const handleCategoryClick = (category) => {
         setSelectedCategory(category);

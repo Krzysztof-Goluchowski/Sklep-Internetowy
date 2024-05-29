@@ -23,14 +23,12 @@ public class CartDetailsController {
 
     @PutMapping("/add")
     public ResponseEntity<CartDetailsDto> addProduct(@RequestBody CartDetailsIdDto cartDetailsIdDto) {
-//        CartDetailsDto savedCartDetailsDto = cartDetailsService.addProduct(cartDetailsIdDto.getUserDto().getId(), cartDetailsIdDto.getProductDto().getId());
         CartDetailsDto savedCartDetailsDto = cartDetailsService.addProduct(cartDetailsIdDto.getUserId(), cartDetailsIdDto.getProductId());
         return ResponseEntity.ok(savedCartDetailsDto);
     }
 
-    @GetMapping("/all")
+    @PostMapping("/all")
     public ResponseEntity<List<CartDetailsDto>> getAllCartItems(@RequestBody UserDto userDto) {
-        System.out.println("rwqe\nrwqe\nrwqe\nrwqe\n");
         List<CartDetailsDto> allCartDetailsDto = cartDetailsService.getCartDetailsByUserId(userDto.getId());
         return ResponseEntity.ok(allCartDetailsDto);
     }

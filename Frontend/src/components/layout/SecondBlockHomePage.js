@@ -1,7 +1,7 @@
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import {ShopContext} from "../pages/Shop/shop-context";
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import "../../assets/styles/miniShop.css"
 
 
@@ -26,7 +26,12 @@ function SecondBlockHomePage() {
         }
     };
 
-    const { products, addToCart, cartItems } = useContext(ShopContext);
+    const { products, addToCart, cartItems, getCartItemQuantity, fetchCartItems, fetchProducts } = useContext(ShopContext);
+
+    useEffect(() => {
+        fetchProducts();
+        fetchCartItems();
+    }, []);
 
     return (
         <>
@@ -43,7 +48,7 @@ function SecondBlockHomePage() {
                                 {
                                     localStorage.getItem('isLoggedIn') === 'true' &&
                                     <button className="button-style" onClick={() => addToCart(product.id)}>
-                                        Add to Cart {cartItems.get(product.id) > 0 && <> ({cartItems.get(product.id)}) </>}
+                                        Add to Cart {getCartItemQuantity(product.id) > 0 && <> ({getCartItemQuantity(product.id)}) </>}
                                     </button>
                                 }
 

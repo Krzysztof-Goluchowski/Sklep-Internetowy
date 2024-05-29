@@ -19,7 +19,7 @@ export const ShopContextProvider = (props) => {
 
     const fetchCartItems = async () => {
         try {
-            const response = await axios.get("http://localhost:8080/cart/all", {
+            const response = await axios.post("http://localhost:8080/cart/all", {
                 id: parseInt(localStorage.getItem('loggedUserId'))
             });
             setCartItems(response.data);
@@ -96,7 +96,7 @@ export const ShopContextProvider = (props) => {
         });
     };
 
-    const contextValue = {products, cartItems2, addToCart, removeFromCart, updateCartItemCount, getTotalCartAmount,
+    const contextValue = {products, cartItems, addToCart, removeFromCart, updateCartItemCount, getTotalCartAmount,
         fetchProducts, fetchCartItems, getCartItemQuantity}
 
     return (
