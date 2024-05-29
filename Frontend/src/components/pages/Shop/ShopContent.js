@@ -5,23 +5,19 @@ import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function ShopContent() {
-    const categories = [
-        { name: "Wszystko", id: null },
-        { name: "Białko", id: 1 },
-        { name: "Węglowodany", id: 2 },
-        { name: "Witaminy", id: 3 },
-    ];
+    const [categories, setCategories] = useState([{ name: "Wszystko", id: null }]);
     const [selectedCategory, setSelectedCategory] = useState("Wszystko");
 
     const [isEmployee, setIsEmployee] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const { products, addToCart, cartItems, fetchProducts } = useContext(ShopContext);
+    const { products, addToCart, cartItems, fetchProducts, fetchCategories } = useContext(ShopContext);
 
     useEffect(() => {
         fetchProducts();
-        console.log(localStorage.getItem('isLoggedIn'))
-        console.log(localStorage.getItem('isEmployee'))
+        fetchCategories().then(fetchedCategories => {
+            setCategories(fetchedCategories);
+        });
         setIsEmployee(localStorage.getItem('isEmployee') === 'true');
         setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
     }, []);
@@ -38,7 +34,8 @@ function ShopContent() {
 
     const filteredProducts = selectedCategory === "Wszystko"
         ? products
-        : products.filter(product => product.categoryID === categories.find(category => category.name === selectedCategory).id);
+        : products.filter(product => product.categoryID === categories.find(category =>
+            category.name === selectedCategory).id);
 
     return (
         <div className="shopContainer">
