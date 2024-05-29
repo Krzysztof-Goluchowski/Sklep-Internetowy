@@ -16,7 +16,7 @@ public interface UserService {
 
     void deleteUser(Long userId);
 
-    Boolean authenticateUser(UserDto userDto);
+    Long authenticateUser(UserDto userDto);
 
     Boolean doesExist(UserDto userDto);
 

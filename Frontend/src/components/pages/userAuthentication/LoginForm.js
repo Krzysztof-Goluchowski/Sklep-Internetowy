@@ -14,10 +14,11 @@ function LoginForm() {
                 email: email,
                 password: password
             });
-            const { message, isEmployee } = response.data;
+            const { message, isEmployee, loggedUserId } = response.data;
             alert(message);
             localStorage.setItem('isLoggedIn', true);
             localStorage.setItem('isEmployee', isEmployee);
+            localStorage.setItem('loggedUserId', loggedUserId);
         } catch (error) {
             alert(error.response.data);
         }

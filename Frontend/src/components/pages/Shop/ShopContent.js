@@ -16,7 +16,7 @@ function ShopContent() {
     const [isEmployee, setIsEmployee] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    const { products, addToCart, cartItems, fetchProducts } = useContext(ShopContext);
+    const { products, addToCart, cartItems, fetchProducts, getCartItemQuantity } = useContext(ShopContext);
 
     useEffect(() => {
         fetchProducts();
@@ -24,7 +24,7 @@ function ShopContent() {
         console.log(localStorage.getItem('isEmployee'))
         setIsEmployee(localStorage.getItem('isEmployee') === 'true');
         setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
-    }, [fetchProducts]);
+    }, []);
 
     const handleCategoryClick = (category) => {
         setSelectedCategory(category);
@@ -74,7 +74,7 @@ function ShopContent() {
                             {
                                 isLoggedIn &&
                                 <button className="cartButton" onClick={() => addToCart(product.id)}>
-                                    Add to Cart {cartItems.get(product.id) > 0 && <> ({cartItems.get(product.id)}) </>}
+                                    Add to Cart {getCartItemQuantity(product.id) > 0 && <> ({getCartItemQuantity(product.id)}) </>}
                                 </button>
                             }
                         </p>
