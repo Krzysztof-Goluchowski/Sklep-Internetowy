@@ -10,11 +10,11 @@ function ShopContent() {
 
     const [isEmployee, setIsEmployee] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-
     const { products, addToCart, cartItems, fetchProducts, fetchCategories } = useContext(ShopContext);
 
     useEffect(() => {
         fetchProducts();
+        fetchCartItems();
         fetchCategories().then(fetchedCategories => {
             setCategories(fetchedCategories);
         });
@@ -71,7 +71,7 @@ function ShopContent() {
                             {
                                 isLoggedIn &&
                                 <button className="cartButton" onClick={() => addToCart(product.id)}>
-                                    Add to Cart {cartItems.get(product.id) > 0 && <> ({cartItems.get(product.id)}) </>}
+                                    Add to Cart {getCartItemQuantity(product.id) > 0 && <> ({getCartItemQuantity(product.id)}) </>}
                                 </button>
                             }
                         </p>

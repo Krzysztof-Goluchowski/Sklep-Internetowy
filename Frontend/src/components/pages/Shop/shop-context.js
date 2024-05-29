@@ -4,7 +4,8 @@ import axios from "axios";
 export const ShopContext = createContext(null);
 
 export const ShopContextProvider = (props) => {
-    const [cartItems, setCartItems] = useState(new Map());
+    const [cartItems2, setCartItems2] = useState(new Map());
+    const [cartItems, setCartItems] = useState([]);
     const [products, setProducts] = useState([]);
 
     const fetchProducts = async () => {
@@ -16,9 +17,25 @@ export const ShopContextProvider = (props) => {
         }
     };
 
+    const fetchCartItems = async () => {
+        try {
+            const response = await axios.post("http://localhost:8080/cart/all", {
+                id: parseInt(localStorage.getItem('loggedUserId'))
+            });
+            setCartItems(response.data);
+        } catch (error) {
+            console.error("There was an error fetching the cart items!", error);
+        }
+    };
+
+    const getCartItemQuantity = (productId) => {
+        const item = cartItems.find(cartItem => cartItem.productId === productId);
+        return item ? item.quantity : 0;
+    }
+
     const getTotalCartAmount = () => {
         let totalAmount = 0;
-        cartItems.forEach((quantity, id) => {
+        cartItems2.forEach((quantity, id) => {
             if (quantity > 0) {
                 const itemInfo = products.find(product => product.id === id);
                 if (itemInfo) {
@@ -30,15 +47,23 @@ export const ShopContextProvider = (props) => {
     };
 
     const addToCart = (id) => {
-        setCartItems((prev) => {
-            const newCart = new Map(prev);
-            newCart.set(id, (newCart.get(id) || 0) + 1);
-            return newCart;
-        });
+        try {
+            console.log("wysylam " + parseInt(localStorage.getItem('loggedUserId')))
+            console.log("wysylam " + id)
+
+            const response = axios.put("http://localhost:8080/cart/add", {
+                userId: parseInt(localStorage.getItem('loggedUserId')),
+                productId: id
+            })
+        } catch (error) {
+            console.error("There was an error with adding to the cart!", error);
+        } finally {
+            fetchCartItems().then();
+        }
     };
 
     const removeFromCart = (id) => {
-        setCartItems((prev) => {
+        setCartItems2((prev) => {
             const newCart = new Map(prev);
             const currentQuantity = newCart.get(id) || 0;
             if (currentQuantity > 0) {
@@ -49,7 +74,7 @@ export const ShopContextProvider = (props) => {
     };
 
     const updateCartItemCount = (newAmount, id) => {
-        setCartItems((prev) => {
+        setCartItems2((prev) => {
             const newCart = new Map(prev);
             newCart.set(id, newAmount);
             return newCart;
@@ -72,7 +97,7 @@ export const ShopContextProvider = (props) => {
 
 
     const contextValue = {products, cartItems, addToCart, removeFromCart, updateCartItemCount, getTotalCartAmount,
-        fetchProducts, fetchCategories}
+        fetchProducts, fetchCartItems, fetchCategories, getCartItemQuantity}
 
     return (
         <ShopContext.Provider value={contextValue}>

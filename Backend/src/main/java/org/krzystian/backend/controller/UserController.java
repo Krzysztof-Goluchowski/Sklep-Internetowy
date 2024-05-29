@@ -51,12 +51,13 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> loginUser(@RequestBody UserDto userDto){
         boolean isEmployee = false;
-        boolean isAuthenticated = userService.authenticateUser(userDto);
-        if (isAuthenticated){
+        Long loggedUserId = userService.authenticateUser(userDto);
+        if (loggedUserId > 0){
             isEmployee = userService.isEmployee(userDto.getEmail());
             Map<String, Object> response = new HashMap<>();
             response.put("message", "Zalogowano pomyślnie!");
             response.put("isEmployee", isEmployee);
+            response.put("loggedUserId", loggedUserId);
             return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);

@@ -66,9 +66,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean authenticateUser(UserDto userDto) {
+    public Long authenticateUser(UserDto userDto) {
         User user = userRepository.findByEmail(userDto.getEmail());
-        return user != null && Objects.equals(user.getPassword(), userDto.getPassword());
+        return (user != null && Objects.equals(user.getPassword(), userDto.getPassword())) ? user.getId() : -1;
     }
 
     @Override
