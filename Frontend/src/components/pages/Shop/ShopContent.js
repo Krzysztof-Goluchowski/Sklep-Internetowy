@@ -24,7 +24,7 @@ function ShopContent() {
         console.log(localStorage.getItem('isEmployee'))
         setIsEmployee(localStorage.getItem('isEmployee') === 'true');
         setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
-    }, [fetchProducts]);
+    }, []);
 
     const handleCategoryClick = (category) => {
         setSelectedCategory(category);

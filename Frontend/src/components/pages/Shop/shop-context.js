@@ -16,15 +16,6 @@ export const ShopContextProvider = (props) => {
         }
     };
 
-    // const fetchProductsWithCategory = async (category) => {
-    //     try {
-    //         const response = await axios.get("http://localhost:8080/products/${category}");
-    //         setProducts(response.data);
-    //     } catch (error) {
-    //         console.error("There was an error fetching the products!", error);
-    //     }
-    // };
-
     const getTotalCartAmount = () => {
         let totalAmount = 0;
         cartItems.forEach((quantity, id) => {

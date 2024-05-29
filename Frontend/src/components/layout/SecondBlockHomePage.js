@@ -1,12 +1,14 @@
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import {ShopContext} from "../pages/Shop/shop-context";
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import "../../assets/styles/miniShop.css"
 
 
 
 function SecondBlockHomePage() {
+    const { products, addToCart, cartItems, fetchProducts } = useContext(ShopContext);
+
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
@@ -26,7 +28,12 @@ function SecondBlockHomePage() {
         }
     };
 
-    const { products, addToCart, cartItems } = useContext(ShopContext);
+
+    useEffect(() => {
+        fetchProducts();
+    }, []);
+
+
 
     return (
         <>

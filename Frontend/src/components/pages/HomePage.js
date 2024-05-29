@@ -17,25 +17,6 @@ import image_4 from "../../assets/images/image-4.jpg";
 import image_5 from "../../assets/images/image-5.jpg";
 
 function HomePage() {
-    const [employeeName, setEmployeeName] = useState("");
-
-    useEffect(() => {
-        fetchEmployeeName();
-    }, []);
-
-    const fetchEmployeeName = async () => {
-        try {
-            const response = await fetch('http://localhost:8080/api/employees/2');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-            setEmployeeName(data.firstName);
-        } catch (error) {
-            console.error('Error fetching employee data:', error);
-        }
-    };
-
     const slides = [
         {url: image_1, title: "runing man"},
         {url: image_2, title: "dead lift"},
@@ -63,7 +44,6 @@ function HomePage() {
             <SecondBlockHomePage/>
             <NiceBackgroudImage/>
             <ThirdBlockHomePage/>
-            <p>Employee name: {employeeName}</p>
             <Footer/>
         </div>
     );
