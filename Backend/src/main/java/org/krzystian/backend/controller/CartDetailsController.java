@@ -8,6 +8,7 @@ import org.krzystian.backend.dto.embedded.CartDetailsIdDto;
 import org.krzystian.backend.entity.CartDetails;
 import org.krzystian.backend.entity.embedded.CartDetailsId;
 import org.krzystian.backend.service.CartDetailsService;
+import org.krzystian.backend.service.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ import java.util.List;
 
 public class CartDetailsController {
     private final CartDetailsService cartDetailsService;
+    private final ProductService productService;
 
     @PostMapping("/all")
     public ResponseEntity<List<CartDetailsDto>> getAllCartItems(@RequestBody UserDto userDto) {
@@ -42,12 +44,17 @@ public class CartDetailsController {
     }
 
     @PutMapping("/set")
-    public ResponseEntity<CartDetailsDto> setProductQuantity(
+    public ResponseEntity<?> setProductQuantity(
             @RequestBody CartDetailsIdDto cartDetailsIdDto,
             @RequestParam int quantity) {
 
-        CartDetailsDto savedCartDetailsDto = cartDetailsService.setProductQuantity(
-                cartDetailsIdDto.getUserId(), cartDetailsIdDto.getProductId(), quantity);
-        return ResponseEntity.ok(savedCartDetailsDto);
+        boolean isInStock = productService.checkIfInStock(cartDetailsIdDto.getProductId(), quantity);
+        if (isInStock){
+            CartDetailsDto savedCartDetailsDto = cartDetailsService.setProductQuantity(
+                    cartDetailsIdDto.getUserId(), cartDetailsIdDto.getProductId(), quantity);
+            return ResponseEntity.ok(savedCartDetailsDto);
+        }
+        return ResponseEntity.badRequest().body("The requested quantity exceeds the available stock");
+
     }
 }
