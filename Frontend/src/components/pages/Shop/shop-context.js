@@ -13,15 +13,12 @@ export const ShopContextProvider = (props) => {
         let totalAmount = 0;
         cartItems.forEach((details, id) => {
             if (details.quantity > 0) {
-                console.log("wieksze");
                 const itemInfo = products.find(product => product.id === details.productId);
                 if (itemInfo) {
-                    console.log("istnieje");
                     totalAmount += details.quantity * itemInfo.price;
                 }
             }
         });
-        console.log("policzylem" + totalAmount.toFixed(2));
         setTotalAmount(totalAmount.toFixed(2));
         return totalAmount.toFixed(2);
     };

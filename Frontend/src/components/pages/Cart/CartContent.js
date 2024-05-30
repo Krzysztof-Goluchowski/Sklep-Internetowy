@@ -14,8 +14,7 @@ export const CartContent = () => {
     useEffect(() => {
         fetchProducts();
         fetchCartItems();
-        // setTotalAmount(getTotalCartAmount);
-    }, []);
+    }, [cartItems]);
 
     if (!cartItems || cartItems.length === 0) {
         return <h1>Loading...</h1>;
