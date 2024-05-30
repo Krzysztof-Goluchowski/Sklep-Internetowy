@@ -1,12 +1,19 @@
 package org.krzystian.backend.controller;
 
 import lombok.AllArgsConstructor;
+import org.krzystian.backend.dto.CartDetailsDto;
+import org.krzystian.backend.dto.OrderDetailsDto;
+import org.krzystian.backend.dto.OrderDto;
+import org.krzystian.backend.dto.UserDto;
+import org.krzystian.backend.entity.Order;
+import org.krzystian.backend.mapper.OrderDetailsMapper;
+import org.krzystian.backend.mapper.OrderMapper;
+import org.krzystian.backend.service.CartDetailsService;
 import org.krzystian.backend.service.OrderService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @RestController
@@ -15,6 +22,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
 
     private OrderService orderService;
+    private CartDetailsService cartDetailsService;
+
+    @PutMapping("/place")
+    public ResponseEntity<List<OrderDetailsDto>> placeOrder(@RequestBody OrderDto orderDto) {
+//        orderDto.setOrderId(null);
+        System.out.println(orderDto.getOrderId());
+        OrderDto savedOrderDto = orderService.createOrder(orderDto);
+
+
+        List<CartDetailsDto> allCartDetailsDto =
+                cartDetailsService.getCartDetailsByUserId(orderDto.getCustomerId());
+        List<OrderDetailsDto> allOrderDetailsDto =
+                OrderDetailsMapper.mapAllCartDetailsToOrderDetailsDto(allCartDetailsDto, savedOrderDto);
+
+
+        return ResponseEntity.ok(allOrderDetailsDto);
+    }
 
     @GetMapping("/monthly-report")
     public ResponseEntity<?> getMonthlyOrderReport() {

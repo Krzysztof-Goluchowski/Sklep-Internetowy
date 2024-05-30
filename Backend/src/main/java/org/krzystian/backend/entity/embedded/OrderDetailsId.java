@@ -1,12 +1,10 @@
 package org.krzystian.backend.entity.embedded;
 
+import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import jakarta.persistence.*;
-import org.krzystian.backend.entity.Product;
-import org.krzystian.backend.entity.User;
 
 import java.io.Serializable;
 
@@ -16,7 +14,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Embeddable
 
-public class CartDetailsId implements Serializable {
-    private Long userId;
+public class OrderDetailsId implements Serializable {
+    private Long orderId;
     private Long productId;
 }

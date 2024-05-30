@@ -18,6 +18,9 @@ import java.util.Date;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "orders_seq")
+//    @SequenceGenerator(name = "orders_seq",
+//            sequenceName = "orders_SEQ", allocationSize = 1)
     @Column(name = "order_id")
     private Long orderId;
 
