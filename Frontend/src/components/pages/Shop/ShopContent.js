@@ -10,7 +10,7 @@ function ShopContent() {
 
     const [isEmployee, setIsEmployee] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const { products, addToCart, cartItems, fetchProducts, fetchCategories } = useContext(ShopContext);
+    const { products, addToCart, cartItems, fetchProducts, fetchCategories, fetchCartItems, getCartItemQuantity } = useContext(ShopContext);
 
     useEffect(() => {
         fetchProducts();

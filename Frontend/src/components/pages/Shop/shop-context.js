@@ -46,19 +46,24 @@ export const ShopContextProvider = (props) => {
         return totalAmount.toFixed(2);
     };
 
-    const addToCart = (id) => {
+    const addToCart = async (id) => {
         try {
             console.log("wysylam " + parseInt(localStorage.getItem('loggedUserId')))
             console.log("wysylam " + id)
 
-            const response = axios.put("http://localhost:8080/cart/add", {
+            // Użycie await, aby poczekać na zakończenie żądania HTTP
+            const response = await axios.put("http://localhost:8080/cart/add", {
                 userId: parseInt(localStorage.getItem('loggedUserId')),
                 productId: id
-            })
+            });
+
+            // Jeśli tu dotarłeś, znaczy żądanie się powiodło
+            console.log("Item added to cart successfully:", response.data);
+
+            // Odświeżanie elementów koszyka po pomyślnym dodaniu
+            await fetchCartItems();
         } catch (error) {
             console.error("There was an error with adding to the cart!", error);
-        } finally {
-            fetchCartItems().then();
         }
     };
 

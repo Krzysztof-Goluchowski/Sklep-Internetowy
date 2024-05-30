@@ -7,7 +7,8 @@ import "../../assets/styles/miniShop.css"
 
 
 function SecondBlockHomePage() {
-    const { products, addToCart, cartItems, fetchProducts } = useContext(ShopContext);
+    // const { products, addToCart, cartItems, fetchProducts } = useContext(ShopContext);
+    const { products, addToCart, cartItems, getCartItemQuantity, fetchCartItems, fetchProducts } = useContext(ShopContext);
 
     const responsive = {
         superLargeDesktop: {
@@ -28,7 +29,6 @@ function SecondBlockHomePage() {
         }
     };
 
-    const { products, addToCart, cartItems, getCartItemQuantity, fetchCartItems, fetchProducts } = useContext(ShopContext);
 
     useEffect(() => {
         fetchProducts();
