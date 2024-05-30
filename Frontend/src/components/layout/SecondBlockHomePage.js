@@ -8,7 +8,7 @@ import "../../assets/styles/miniShop.css"
 
 function SecondBlockHomePage() {
     // const { products, addToCart, cartItems, fetchProducts } = useContext(ShopContext);
-    const { products, addToCart, cartItems, getCartItemQuantity, fetchCartItems, fetchProducts } = useContext(ShopContext);
+    const { products, addToCart, cartItems, getCartItemQuantity, fetchCartItems, fetchProducts, updateCartItemCount } = useContext(ShopContext);
 
     const responsive = {
         superLargeDesktop: {
@@ -49,7 +49,7 @@ function SecondBlockHomePage() {
                             <p>
                                 {
                                     localStorage.getItem('isLoggedIn') === 'true' &&
-                                    <button className="button-style" onClick={() => addToCart(product.id)}>
+                                    <button className="button-style" onClick={() => updateCartItemCount(getCartItemQuantity(product.id) + 1, product.id)}>
                                         Add to Cart {getCartItemQuantity(product.id) > 0 && <> ({getCartItemQuantity(product.id)}) </>}
                                     </button>
                                 }

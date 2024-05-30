@@ -21,4 +21,5 @@ public class ProductDto {
     private double price;
     private double initialPrice;
     private byte[] image;
+    private int unitsInStock;
 }

@@ -78,4 +78,12 @@ public class ProductServiceImpl implements ProductService {
 
         return ProductMapper.mapToProductDto(savedProduct);
     }
+
+    @Override
+    public boolean checkIfInStock(Long productId, int quantity) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Product with given ID doesn't exist!"));
+
+        return product.getUnitsInStock() >= quantity;
+    }
 }
