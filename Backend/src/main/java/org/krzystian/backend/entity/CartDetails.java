@@ -35,8 +35,9 @@ public class CartDetails {
         quantity++;
     }
 
-    public void decrementQuantity() {
+    public int decrementQuantity() {
         if (quantity > 0)
             quantity--;
+        return quantity;
     }
 }

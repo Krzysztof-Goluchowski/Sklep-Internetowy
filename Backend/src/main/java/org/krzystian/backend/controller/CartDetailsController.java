@@ -21,15 +21,33 @@ import java.util.List;
 public class CartDetailsController {
     private final CartDetailsService cartDetailsService;
 
-    @PutMapping("/add")
-    public ResponseEntity<CartDetailsDto> addProduct(@RequestBody CartDetailsIdDto cartDetailsIdDto) {
-        CartDetailsDto savedCartDetailsDto = cartDetailsService.addProduct(cartDetailsIdDto.getUserId(), cartDetailsIdDto.getProductId());
-        return ResponseEntity.ok(savedCartDetailsDto);
-    }
-
     @PostMapping("/all")
     public ResponseEntity<List<CartDetailsDto>> getAllCartItems(@RequestBody UserDto userDto) {
         List<CartDetailsDto> allCartDetailsDto = cartDetailsService.getCartDetailsByUserId(userDto.getId());
         return ResponseEntity.ok(allCartDetailsDto);
+    }
+
+    @PutMapping("/add")
+    public ResponseEntity<CartDetailsDto> addProduct(@RequestBody CartDetailsIdDto cartDetailsIdDto) {
+        CartDetailsDto savedCartDetailsDto = cartDetailsService.addProduct(
+                cartDetailsIdDto.getUserId(), cartDetailsIdDto.getProductId());
+        return ResponseEntity.ok(savedCartDetailsDto);
+    }
+
+    @PutMapping("/remove")
+    public ResponseEntity<CartDetailsDto> removeProduct(@RequestBody CartDetailsIdDto cartDetailsIdDto) {
+        CartDetailsDto savedCartDetailsDto = cartDetailsService.removeProduct(
+                cartDetailsIdDto.getUserId(), cartDetailsIdDto.getProductId());
+        return ResponseEntity.ok(savedCartDetailsDto);
+    }
+
+    @PutMapping("/set")
+    public ResponseEntity<CartDetailsDto> setProductQuantity(
+            @RequestBody CartDetailsIdDto cartDetailsIdDto,
+            @RequestParam int quantity) {
+
+        CartDetailsDto savedCartDetailsDto = cartDetailsService.setProductQuantity(
+                cartDetailsIdDto.getUserId(), cartDetailsIdDto.getProductId(), quantity);
+        return ResponseEntity.ok(savedCartDetailsDto);
     }
 }

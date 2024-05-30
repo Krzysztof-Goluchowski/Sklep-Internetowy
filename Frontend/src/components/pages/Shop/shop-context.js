@@ -4,11 +4,30 @@ import axios from "axios";
 export const ShopContext = createContext(null);
 
 export const ShopContextProvider = (props) => {
-    const [cartItems2, setCartItems2] = useState(new Map());
     const [cartItems, setCartItems] = useState([]);
     const [products, setProducts] = useState([]);
 
+    const [totalAmount, setTotalAmount] = useState(0);
+
+    const getTotalCartAmount = async () => {
+        let totalAmount = 0;
+        cartItems.forEach((details, id) => {
+            if (details.quantity > 0) {
+                console.log("wieksze");
+                const itemInfo = products.find(product => product.id === details.productId);
+                if (itemInfo) {
+                    console.log("istnieje");
+                    totalAmount += details.quantity * itemInfo.price;
+                }
+            }
+        });
+        console.log("policzylem" + totalAmount.toFixed(2));
+        setTotalAmount(totalAmount.toFixed(2));
+        return totalAmount.toFixed(2);
+    };
+
     const fetchProducts = async () => {
+        console.log("pobieram");
         try {
             const response = await axios.get("http://localhost:8080/products/all");
             setProducts(response.data);
@@ -17,12 +36,16 @@ export const ShopContextProvider = (props) => {
         }
     };
 
+
     const fetchCartItems = async () => {
+        console.log("pobieram cart");
         try {
             const response = await axios.post("http://localhost:8080/cart/all", {
                 id: parseInt(localStorage.getItem('loggedUserId'))
             });
-            setCartItems(response.data);
+            const sortedCartItems = response.data.sort((a, b) => a.productId - b.productId);
+            setCartItems(sortedCartItems);
+            await getTotalCartAmount();
         } catch (error) {
             console.error("There was an error fetching the cart items!", error);
         }
@@ -33,57 +56,53 @@ export const ShopContextProvider = (props) => {
         return item ? item.quantity : 0;
     }
 
-    const getTotalCartAmount = () => {
-        let totalAmount = 0;
-        cartItems2.forEach((quantity, id) => {
-            if (quantity > 0) {
-                const itemInfo = products.find(product => product.id === id);
-                if (itemInfo) {
-                    totalAmount += quantity * itemInfo.price;
-                }
-            }
-        });
-        return totalAmount.toFixed(2);
-    };
 
     const addToCart = async (id) => {
         try {
-            console.log("wysylam " + parseInt(localStorage.getItem('loggedUserId')))
-            console.log("wysylam " + id)
-
-            // Użycie await, aby poczekać na zakończenie żądania HTTP
             const response = await axios.put("http://localhost:8080/cart/add", {
                 userId: parseInt(localStorage.getItem('loggedUserId')),
                 productId: id
             });
 
-            // Jeśli tu dotarłeś, znaczy żądanie się powiodło
             console.log("Item added to cart successfully:", response.data);
 
-            // Odświeżanie elementów koszyka po pomyślnym dodaniu
             await fetchCartItems();
+            await setTotalAmount(getTotalCartAmount());
         } catch (error) {
             console.error("There was an error with adding to the cart!", error);
         }
     };
 
-    const removeFromCart = (id) => {
-        setCartItems2((prev) => {
-            const newCart = new Map(prev);
-            const currentQuantity = newCart.get(id) || 0;
-            if (currentQuantity > 0) {
-                newCart.set(id, currentQuantity - 1);
-            }
-            return newCart;
-        });
+    const removeFromCart = async (id) => {
+        try {
+            const response = await axios.put("http://localhost:8080/cart/remove", {
+                userId: parseInt(localStorage.getItem('loggedUserId')),
+                productId: id
+            });
+
+            console.log("Item removed from the cart successfully:", response.data);
+
+            await fetchCartItems();
+            await setTotalAmount(getTotalCartAmount());
+        } catch (error) {
+            console.error("There was an error with removing from the cart!", error);
+        }
     };
 
-    const updateCartItemCount = (newAmount, id) => {
-        setCartItems2((prev) => {
-            const newCart = new Map(prev);
-            newCart.set(id, newAmount);
-            return newCart;
-        });
+    const updateCartItemCount = async (newAmount, id) => {
+        try {
+            const response = await axios.put(`http://localhost:8080/cart/set?quantity=${newAmount}`, {
+                userId: parseInt(localStorage.getItem('loggedUserId')),
+                productId: id
+            });
+
+            console.log("Product quantity set successfully:", response.data);
+
+            await fetchCartItems();
+            await setTotalAmount(getTotalCartAmount());
+        } catch (error) {
+            console.error("There was an error with setting product quantity!", error);
+        }
     };
 
     const fetchCategories = async () => {
@@ -101,7 +120,7 @@ export const ShopContextProvider = (props) => {
     };
 
 
-    const contextValue = {products, cartItems, addToCart, removeFromCart, updateCartItemCount, getTotalCartAmount,
+    const contextValue = {products, cartItems, totalAmount, addToCart, removeFromCart, updateCartItemCount, getTotalCartAmount,
         fetchProducts, fetchCartItems, fetchCategories, getCartItemQuantity}
 
     return (

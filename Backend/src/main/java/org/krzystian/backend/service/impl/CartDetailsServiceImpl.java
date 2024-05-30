@@ -35,15 +35,7 @@ public class CartDetailsServiceImpl implements CartDetailsService {
 
     @Override
     public CartDetailsDto addProduct(Long userId, Long productId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User with given id doesn't exist!"));
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new ResourceNotFoundException("Product with given id doesn't exist!"));
-
-        CartDetailsId cartId = new CartDetailsId(user.getId(), product.getId());
-
-        CartDetails cartDetails = cartDetailsRepository.findById(cartId)
-                .orElse(new CartDetails(cartId, user, product, 0));
+        CartDetails cartDetails = findCartDetailsOrNew(userId, productId);
 
         cartDetails.incrementQuantity();
 
@@ -54,12 +46,35 @@ public class CartDetailsServiceImpl implements CartDetailsService {
 
     @Override
     public CartDetailsDto removeProduct(Long userId, Long productId) {
-        return null;
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User with given id doesn't exist!"));
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Product with given id doesn't exist!"));
+
+        CartDetailsId cartId = new CartDetailsId(user.getId(), product.getId());
+
+        CartDetails cartDetails = cartDetailsRepository.findById(cartId)
+                .orElseThrow(() -> new ResourceNotFoundException(("No such data in the cart!")));
+
+        int updatedQuantity = cartDetails.decrementQuantity();
+        if (updatedQuantity == 0) {
+            cartDetailsRepository.delete(cartDetails);
+            return null;
+        } else {
+            CartDetails savedCartDetails = cartDetailsRepository.save(cartDetails);
+            return CartDetailsMapper.mapToCartDetailsDto(savedCartDetails);
+        }
     }
 
     @Override
     public CartDetailsDto setProductQuantity(Long userId, Long productId, int quantity) {
-        return null;
+        CartDetails cartDetails = findCartDetailsOrNew(userId, productId);
+
+        cartDetails.setQuantity(quantity);
+
+        CartDetails savedCartDetails = cartDetailsRepository.save(cartDetails);
+
+        return CartDetailsMapper.mapToCartDetailsDto(savedCartDetails);
     }
 
     @Override
@@ -69,5 +84,17 @@ public class CartDetailsServiceImpl implements CartDetailsService {
                 .toList();
 
         return allCartDetailsDto;
+    }
+
+    private CartDetails findCartDetailsOrNew(Long userId, Long productId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User with given id doesn't exist!"));
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Product with given id doesn't exist!"));
+
+        CartDetailsId cartId = new CartDetailsId(user.getId(), product.getId());
+
+        return cartDetailsRepository.findById(cartId)
+                .orElse(new CartDetails(cartId, user, product, 0));
     }
 }
