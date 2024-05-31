@@ -26,16 +26,15 @@ public class OrderController {
 
     @PutMapping("/place")
     public ResponseEntity<List<OrderDetailsDto>> placeOrder(@RequestBody OrderDto orderDto) {
-//        orderDto.setOrderId(null);
-        System.out.println(orderDto.getOrderId());
         OrderDto savedOrderDto = orderService.createOrder(orderDto);
-
 
         List<CartDetailsDto> allCartDetailsDto =
                 cartDetailsService.getCartDetailsByUserId(orderDto.getCustomerId());
         List<OrderDetailsDto> allOrderDetailsDto =
-                OrderDetailsMapper.mapAllCartDetailsToOrderDetailsDto(allCartDetailsDto, savedOrderDto);
+                cartDetailsService.mapAllCartDetailsToOrderDetailsDto(allCartDetailsDto, savedOrderDto);
 
+        allOrderDetailsDto
+                .forEach(orderDetails -> orderService.createOrderDetails(orderDetails));
 
         return ResponseEntity.ok(allOrderDetailsDto);
     }

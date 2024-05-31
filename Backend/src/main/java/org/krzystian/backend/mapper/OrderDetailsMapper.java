@@ -4,35 +4,37 @@ import org.krzystian.backend.dto.CartDetailsDto;
 import org.krzystian.backend.dto.OrderDetailsDto;
 import org.krzystian.backend.dto.OrderDto;
 import org.krzystian.backend.entity.OrderDetails;
+import org.krzystian.backend.entity.embedded.OrderDetailsId;
+import org.krzystian.backend.exception.ResourceNotFoundException;
+import org.krzystian.backend.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class OrderDetailsMapper {
+
     public static OrderDetailsDto mapToOrderDetailsDto(OrderDetails orderDetails) {
         return new OrderDetailsDto(
                 orderDetails.getOrderDetailsId().getOrderId(),
                 orderDetails.getOrderDetailsId().getProductId(),
-                orderDetails.getQuantity()
+                orderDetails.getQuantity(),
+                orderDetails.getUnitPrice()
         );
     }
 
-    public static List<OrderDetailsDto> mapAllCartDetailsToOrderDetailsDto(
-            List<CartDetailsDto> allCartDetailsDto, OrderDto orderDto) {
+    public static OrderDetails mapToOrderDetails(OrderDetailsDto orderDetailsDto) {
 
-        return allCartDetailsDto.stream()
-                .map(cartDetailsDto -> mapCartDetailsToOrderDetailsDto(
-                        cartDetailsDto, orderDto))
-                .collect(Collectors.toList());
-    }
+        OrderDetailsId orderDetailsId = new OrderDetailsId(
+                orderDetailsDto.getOrderId(),
+                orderDetailsDto.getProductId());
 
-    private static OrderDetailsDto mapCartDetailsToOrderDetailsDto(
-            CartDetailsDto cartDetailsDto, OrderDto orderDto) {
-
-        return new OrderDetailsDto(
-                orderDto.getOrderId(),
-                cartDetailsDto.getProductId(),
-                cartDetailsDto.getQuantity()
+        return new OrderDetails(
+                orderDetailsId,
+                null,
+                null,
+                orderDetailsDto.getQuantity(),
+                orderDetailsDto.getUnitPrice()
         );
     }
 }

@@ -2,6 +2,8 @@ package org.krzystian.backend.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.krzystian.backend.dto.CartDetailsDto;
+import org.krzystian.backend.dto.OrderDetailsDto;
+import org.krzystian.backend.dto.OrderDto;
 import org.krzystian.backend.entity.CartDetails;
 import org.krzystian.backend.entity.Product;
 import org.krzystian.backend.entity.User;
@@ -96,5 +98,30 @@ public class CartDetailsServiceImpl implements CartDetailsService {
 
         return cartDetailsRepository.findById(cartId)
                 .orElse(new CartDetails(cartId, user, product, 0));
+    }
+
+    @Override
+    public List<OrderDetailsDto> mapAllCartDetailsToOrderDetailsDto(
+            List<CartDetailsDto> allCartDetailsDto, OrderDto orderDto) {
+
+        return allCartDetailsDto.stream()
+                .map(cartDetailsDto -> mapCartDetailsToOrderDetailsDto(
+                        cartDetailsDto, orderDto))
+                .collect(Collectors.toList());
+    }
+
+    private OrderDetailsDto mapCartDetailsToOrderDetailsDto(
+            CartDetailsDto cartDetailsDto, OrderDto orderDto) {
+
+        double productPrice = productRepository.findById(cartDetailsDto.getProductId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Product with given id doesn't exist!")).getPrice();
+
+        return new OrderDetailsDto(
+                orderDto.getOrderId(),
+                cartDetailsDto.getProductId(),
+                cartDetailsDto.getQuantity(),
+                productPrice
+        );
     }
 }

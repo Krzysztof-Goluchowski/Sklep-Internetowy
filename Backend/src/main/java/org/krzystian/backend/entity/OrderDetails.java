@@ -28,5 +28,9 @@ public class OrderDetails {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @Column(name = "quantity")
     private Integer quantity;
+
+    @Column(name = "unit_price")
+    private Double unitPrice;
 }
