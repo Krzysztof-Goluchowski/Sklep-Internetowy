@@ -33,4 +33,7 @@ public class Product {
 
     @Column(name = "image")
     private byte[] image;
+
+    @Column(name = "units_in_stock")
+    private int unitsInStock;
 }

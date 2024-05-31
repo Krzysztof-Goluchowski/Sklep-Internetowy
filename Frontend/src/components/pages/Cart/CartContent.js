@@ -14,7 +14,7 @@ export const CartContent = () => {
     useEffect(() => {
         fetchProducts();
         fetchCartItems();
-    }, []);
+    }, [cartItems]);
 
     const placeOrder = async () => {
         try {

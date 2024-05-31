@@ -16,4 +16,6 @@ public interface ProductService {
     void deleteProduct(Long productId);
 
     ProductDto updateProductPrice(Long productId, double price);
+
+    boolean checkIfInStock(Long productId, int quantity);
 }
