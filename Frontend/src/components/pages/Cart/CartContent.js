@@ -4,10 +4,10 @@ import {ShopContext} from "../Shop/shop-context";
 import {CartItem} from "./cart-item";
 import "../../../assets/styles/cart.css"
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 export const CartContent = () => {
     const { cartItems, fetchCartItems, fetchProducts, getTotalCartAmount, totalAmount } = useContext(ShopContext);
-    // const [totalAmount, setTotalAmount] = useState(getTotalCartAmount);
 
     const navigate = useNavigate()
 
@@ -15,6 +15,23 @@ export const CartContent = () => {
         fetchProducts();
         fetchCartItems();
     }, [cartItems]);
+
+    const placeOrder = async () => {
+        try {
+            const response = await axios.put('http://localhost:8080/orders/place', {
+                orderDate: new Date('2024-09-11'),
+                shipCity: 'jakies miasto',
+                shipPostalCode: 'jakis kod pocztowy',
+                shipAddress: 'jakis adres',
+                customersPhone: 'jakis telefon',
+                customerId: localStorage.getItem('loggedUserId')
+            });
+            alert("Pomyslnie zlozono zamowienie!");
+            console.log(response.data);
+        } catch (error) {
+            alert(error.response.data);
+        }
+    }
 
     if (!cartItems || cartItems.length === 0) {
         return <h1>Loading...</h1>;
@@ -37,7 +54,7 @@ export const CartContent = () => {
 
                 <p>Subtotal: ${totalAmount}</p>
                 <button onClick={() => navigate("/Shop")}> Continue Shopping </button>
-                <button> Checkout </button>
+                <button onClick={placeOrder}> Checkout </button>
             </div>
             ) : (
                 <h1>Your Cart is Empty</h1>
