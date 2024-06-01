@@ -36,6 +36,8 @@ public class OrderController {
         allOrderDetailsDto
                 .forEach(orderDetails -> orderService.createOrderDetails(orderDetails));
 
+        cartDetailsService.emptyCart(orderDto.getCustomerId());
+
         return ResponseEntity.ok(allOrderDetailsDto);
     }
 

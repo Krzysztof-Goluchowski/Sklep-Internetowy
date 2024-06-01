@@ -33,7 +33,7 @@ export const CartContent = () => {
         }
     }
 
-    if (!cartItems || cartItems.length === 0) {
+    if (!cartItems) {
         return <h1>Loading...</h1>;
     }
 

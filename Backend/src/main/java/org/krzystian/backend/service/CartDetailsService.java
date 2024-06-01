@@ -17,4 +17,6 @@ public interface CartDetailsService {
 
     List<OrderDetailsDto> mapAllCartDetailsToOrderDetailsDto(
             List<CartDetailsDto> allCartDetailsDto, OrderDto orderDto);
+
+    void emptyCart(Long userId);
 }

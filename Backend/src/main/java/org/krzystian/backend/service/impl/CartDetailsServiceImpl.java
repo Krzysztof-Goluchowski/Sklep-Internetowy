@@ -110,6 +110,12 @@ public class CartDetailsServiceImpl implements CartDetailsService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void emptyCart(Long userId) {
+        List<CartDetails> allCartDetails = cartDetailsRepository.findByCartIdUserId(userId);
+        cartDetailsRepository.deleteAll(allCartDetails);
+    }
+
     private OrderDetailsDto mapCartDetailsToOrderDetailsDto(
             CartDetailsDto cartDetailsDto, OrderDto orderDto) {
 
