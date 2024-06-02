@@ -52,39 +52,41 @@ export const ShopContextProvider = (props) => {
     }
 
 
-    const addToCart = async (id) => {
-        try {
-            const response = await axios.put("http://localhost:8080/cart/add", {
-                userId: parseInt(localStorage.getItem('loggedUserId')),
-                productId: id
-            });
+    // const addToCart = async (id) => {
+    //     try {
+    //         const response = await axios.put("http://localhost:8080/cart/add", {
+    //             userId: parseInt(localStorage.getItem('loggedUserId')),
+    //             productId: id
+    //         });
+    //
+    //         console.log("Item added to cart successfully:", response.data);
+    //
+    //         await fetchCartItems();
+    //         await setTotalAmount(getTotalCartAmount());
+    //     } catch (error) {
+    //         console.error("There was an error with adding to the cart!", error);
+    //     }
+    // };
 
-            console.log("Item added to cart successfully:", response.data);
-
-            await fetchCartItems();
-            await setTotalAmount(getTotalCartAmount());
-        } catch (error) {
-            console.error("There was an error with adding to the cart!", error);
-        }
-    };
-
-    const removeFromCart = async (id) => {
-        try {
-            const response = await axios.put("http://localhost:8080/cart/remove", {
-                userId: parseInt(localStorage.getItem('loggedUserId')),
-                productId: id
-            });
-
-            console.log("Item removed from the cart successfully:", response.data);
-
-            await fetchCartItems();
-            await setTotalAmount(getTotalCartAmount());
-        } catch (error) {
-            console.error("There was an error with removing from the cart!", error);
-        }
-    };
+    // const removeFromCart = async (id) => {
+    //     try {
+    //         const response = await axios.put("http://localhost:8080/cart/remove", {
+    //             userId: parseInt(localStorage.getItem('loggedUserId')),
+    //             productId: id
+    //         });
+    //
+    //         console.log("Item removed from the cart successfully:", response.data);
+    //
+    //         await fetchCartItems();
+    //         await setTotalAmount(getTotalCartAmount());
+    //     } catch (error) {
+    //         console.error("There was an error with removing from the cart!", error);
+    //     }
+    // };
 
     const updateCartItemCount = async (newAmount, id) => {
+        if (newAmount < 0) newAmount = 0;
+
         try {
             const response = await axios.put(`http://localhost:8080/cart/set?quantity=${newAmount}`, {
                 userId: parseInt(localStorage.getItem('loggedUserId')),
@@ -115,7 +117,9 @@ export const ShopContextProvider = (props) => {
     };
 
 
-    const contextValue = {products, cartItems, totalAmount, addToCart, removeFromCart, updateCartItemCount, getTotalCartAmount,
+    const contextValue = {products, cartItems, totalAmount,
+        // addToCart, removeFromCart,
+        updateCartItemCount, getTotalCartAmount,
         fetchProducts, fetchCartItems, fetchCategories, getCartItemQuantity}
 
     return (
