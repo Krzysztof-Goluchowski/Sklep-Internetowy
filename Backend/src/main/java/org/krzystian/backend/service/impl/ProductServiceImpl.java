@@ -86,4 +86,12 @@ public class ProductServiceImpl implements ProductService {
 
         return product.getUnitsInStock() >= quantity;
     }
+
+    @Override
+    public void removeFromStock(Long productId, int quantity) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Product with given ID doesn't exist!"));
+
+        product.removeUnitsInStock(quantity);
+    }
 }

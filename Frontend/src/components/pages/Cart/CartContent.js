@@ -26,7 +26,7 @@ export const CartContent = () => {
                 customersPhone: 'jakis telefon',
                 customerId: localStorage.getItem('loggedUserId')
             });
-            alert("Pomyslnie zlozono zamowienie!");
+            alert(response.data);
             console.log(response.data);
         } catch (error) {
             alert(error.response.data);
