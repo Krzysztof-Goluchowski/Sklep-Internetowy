@@ -1,10 +1,8 @@
-import React, {useContext, useEffect, useState} from "react";
-// import {PRODUCTS} from "../../common/useProductsHook";
+import React, {useContext, useEffect} from "react";
 import {ShopContext} from "../Shop/shop-context";
 import {CartItem} from "./cart-item";
 import "../../../assets/styles/cart.css"
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
 
 export const CartContent = () => {
     const { cartItems, fetchCartItems, fetchProducts, getTotalCartAmount, totalAmount } = useContext(ShopContext);
@@ -17,20 +15,7 @@ export const CartContent = () => {
     }, [cartItems]);
 
     const placeOrder = async () => {
-        try {
-            const response = await axios.put('http://localhost:8080/orders/place', {
-                orderDate: new Date('2024-09-11'),
-                shipCity: 'jakies miasto',
-                shipPostalCode: 'jakis kod pocztowy',
-                shipAddress: 'jakis adres',
-                customersPhone: 'jakis telefon',
-                customerId: localStorage.getItem('loggedUserId')
-            });
-            alert(response.data);
-            console.log(response.data);
-        } catch (error) {
-            alert(error.response.data);
-        }
+        navigate("/cart/checkout");
     }
 
     if (!cartItems) {
