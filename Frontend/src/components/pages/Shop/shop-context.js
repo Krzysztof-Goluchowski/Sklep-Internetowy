@@ -7,7 +7,7 @@ export const ShopContextProvider = (props) => {
     const [cartItems, setCartItems] = useState([]);
     const [products, setProducts] = useState([]);
 
-    const [totalAmount, setTotalAmount] = useState(0);
+    const [totalAmount, setTotalAmount] = useState(-1);
 
     const getTotalCartAmount = async () => {
         let totalAmount = 0;
@@ -51,39 +51,6 @@ export const ShopContextProvider = (props) => {
         return item ? item.quantity : 0;
     }
 
-
-    // const addToCart = async (id) => {
-    //     try {
-    //         const response = await axios.put("http://localhost:8080/cart/add", {
-    //             userId: parseInt(localStorage.getItem('loggedUserId')),
-    //             productId: id
-    //         });
-    //
-    //         console.log("Item added to cart successfully:", response.data);
-    //
-    //         await fetchCartItems();
-    //         await setTotalAmount(getTotalCartAmount());
-    //     } catch (error) {
-    //         console.error("There was an error with adding to the cart!", error);
-    //     }
-    // };
-
-    // const removeFromCart = async (id) => {
-    //     try {
-    //         const response = await axios.put("http://localhost:8080/cart/remove", {
-    //             userId: parseInt(localStorage.getItem('loggedUserId')),
-    //             productId: id
-    //         });
-    //
-    //         console.log("Item removed from the cart successfully:", response.data);
-    //
-    //         await fetchCartItems();
-    //         await setTotalAmount(getTotalCartAmount());
-    //     } catch (error) {
-    //         console.error("There was an error with removing from the cart!", error);
-    //     }
-    // };
-
     const updateCartItemCount = async (newAmount, id) => {
         if (newAmount < 0) newAmount = 0;
 
@@ -118,8 +85,7 @@ export const ShopContextProvider = (props) => {
 
 
     const contextValue = {products, cartItems, totalAmount,
-        // addToCart, removeFromCart,
-        updateCartItemCount, getTotalCartAmount,
+        updateCartItemCount, getTotalCartAmount, setTotalAmount,
         fetchProducts, fetchCartItems, fetchCategories, getCartItemQuantity}
 
     return (

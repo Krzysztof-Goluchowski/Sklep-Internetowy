@@ -59,6 +59,12 @@
     justify-content: center;
 }
 
+.editButtons {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
 .cartButton:hover {
     background-color: #fd5f26;
 }
@@ -89,12 +95,9 @@
 }
 
 .productPhoto {
-    width: 60%;
-    height: 60%;
+    height: 30vh;
     padding: 20px;
 }
-
-
 
 .shopEditContainer {
     display: flex;

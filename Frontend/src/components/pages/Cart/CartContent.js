@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
 export const CartContent = () => {
-    const { cartItems, fetchCartItems, fetchProducts, getTotalCartAmount, totalAmount } = useContext(ShopContext);
+    const { cartItems, fetchCartItems, fetchProducts, getTotalCartAmount, setTotalAmount, totalAmount } = useContext(ShopContext);
 
     const navigate = useNavigate()
 
@@ -57,7 +57,10 @@ export const CartContent = () => {
                 <button onClick={placeOrder}> Checkout </button>
             </div>
             ) : (
-                <h1>Your Cart is Empty</h1>
+                <div className="emptyCart">
+                    <h1>It's so empty and cold out here...</h1>
+                    <h1>Visit our shop and something to your cart!</h1>
+                </div>
             )}
         </div>
     );

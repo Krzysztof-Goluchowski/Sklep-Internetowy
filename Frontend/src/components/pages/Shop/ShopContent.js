@@ -78,9 +78,12 @@ function ShopContent() {
                     </div>
                 ))}
             </div>
-            {isEmployee && <Link className="cartButton" to="/Shop/Edit">EDIT</Link>}
-            {isEmployee && <Link className="cartButton" to="/Shop/Add">Add Product</Link>}
-            {isEmployee && <Link className="cartButton" to="/Shop/Raport">See annual sales report</Link>}
+            <div className="editButtons">
+                {isEmployee && <Link className="cartButton" style={{width: '20vw'}} to="/Shop/Edit">EDIT</Link>}
+                {isEmployee && <Link className="cartButton" style={{width: '20vw'}} to="/Shop/Add">Add Product</Link>}
+                {isEmployee && <Link className="cartButton" style={{width: '20vw'}} to="/Shop/Raport">See annual sales report</Link>}
+            </div>
+
         </div>
     );
 }

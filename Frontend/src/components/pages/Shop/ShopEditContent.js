@@ -8,8 +8,6 @@ function ShopContentEdit() {
     const [editingIndex, setEditingIndex] = useState(-1);
     const [editedPrice, setEditedPrice] = useState("");
 
-    // const products = useProductsHook();
-
     const { products, fetchProducts } = useContext(ShopContext);
 
     useEffect(() => {
@@ -36,7 +34,6 @@ function ShopContentEdit() {
     };
 
     const handleSaveClick = () => {
-        // products[editingIndex].price = editedPrice;
         const newPrice = parseFloat(editedPrice);
         if (!isNaN(newPrice)) {
             axios.put(`http://localhost:8080/products/edit-price/${editingIndex}`, {
@@ -59,8 +56,6 @@ function ShopContentEdit() {
         setEditingIndex(-1);
     };
 
-    // console.log("halo" + editingIndex);
-
     return (<div className="shopEditContainer">
         <div className={"shopProducts"}>
             {products.map((product) => (
@@ -72,15 +67,17 @@ function ShopContentEdit() {
                     <p>Current price: </p>
                     <p className="price">{`$${product.price}`}</p>
                     <strong>Cena: </strong>
+                    <div style={{height: '50px'}}>
                     {editingIndex === product.id ? (
-                        <input
-                            type="text"
-                            value={editedPrice}
-                            onChange={(e) => setEditedPrice(e.target.value)}
-                        />
+                            <input
+                                type="text"
+                                value={editedPrice}
+                                onChange={(e) => setEditedPrice(e.target.value)}
+                            />
                     ) : (
                         product.price
                     )}
+                    </div>
                     {editingIndex === product.id ? (
                         <>
                             <button onClick={handleSaveClick}>Zapisz</button>
@@ -88,14 +85,14 @@ function ShopContentEdit() {
                         </>
                     ) : (
                         <>
-                            <button onClick={() => handleEditClick(product.id)}>Edytuj</button>
+                            <button style={{marginBottom: '10px'}} onClick={() => handleEditClick(product.id)}>Edytuj</button>
                             <button onClick={() => handleDeleteClick(product.id)}>Usuń</button>
                         </>
                     )}
                 </div>
             ))}
         </div>
-        <Link className="cartButton" to="/Shop">RETURN TO THE SHOP</Link>
+        <Link className="cartButton" style={{width: '30vw'}} to="/Shop">RETURN TO THE SHOP</Link>
     </div>);
 }
 
