@@ -10,6 +10,7 @@ import org.krzystian.backend.mapper.OrderDetailsMapper;
 import org.krzystian.backend.mapper.OrderMapper;
 import org.krzystian.backend.service.CartDetailsService;
 import org.krzystian.backend.service.OrderService;
+import org.krzystian.backend.service.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,20 +24,36 @@ public class OrderController {
 
     private OrderService orderService;
     private CartDetailsService cartDetailsService;
+    private ProductService productService;
 
     @PutMapping("/place")
-    public ResponseEntity<List<OrderDetailsDto>> placeOrder(@RequestBody OrderDto orderDto) {
-        OrderDto savedOrderDto = orderService.createOrder(orderDto);
+    public ResponseEntity<String> placeOrder(@RequestBody OrderDto orderDto) {
 
         List<CartDetailsDto> allCartDetailsDto =
                 cartDetailsService.getCartDetailsByUserId(orderDto.getCustomerId());
+
+        for (CartDetailsDto cartDetailsDto : allCartDetailsDto) {
+            if (!productService.checkIfInStock(
+                    cartDetailsDto.getProductId(), cartDetailsDto.getQuantity())) {
+                return ResponseEntity.ok("Brak takiej liczby produktow na stanie!");
+            }
+        }
+
+        OrderDto savedOrderDto = orderService.createOrder(orderDto);
         List<OrderDetailsDto> allOrderDetailsDto =
                 cartDetailsService.mapAllCartDetailsToOrderDetailsDto(allCartDetailsDto, savedOrderDto);
 
         allOrderDetailsDto
                 .forEach(orderDetails -> orderService.createOrderDetails(orderDetails));
 
-        return ResponseEntity.ok(allOrderDetailsDto);
+        for (CartDetailsDto cartDetailsDto : allCartDetailsDto) {
+            productService.removeFromStock(
+                    cartDetailsDto.getProductId(), cartDetailsDto.getQuantity());
+        }
+
+        cartDetailsService.emptyCart(orderDto.getCustomerId());
+
+        return ResponseEntity.ok("Pomyslnie zlozono zamowienie!");
     }
 
     @GetMapping("/monthly-report")

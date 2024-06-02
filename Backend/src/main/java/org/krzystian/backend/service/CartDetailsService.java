@@ -7,9 +7,6 @@ import org.krzystian.backend.dto.OrderDto;
 import java.util.List;
 
 public interface CartDetailsService {
-    CartDetailsDto addProduct(Long userId, Long productId);
-
-    CartDetailsDto removeProduct(Long userId, Long productId);
 
     CartDetailsDto setProductQuantity(Long userId, Long productId, int quantity);
 
@@ -17,4 +14,6 @@ public interface CartDetailsService {
 
     List<OrderDetailsDto> mapAllCartDetailsToOrderDetailsDto(
             List<CartDetailsDto> allCartDetailsDto, OrderDto orderDto);
+
+    void emptyCart(Long userId);
 }

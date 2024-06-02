@@ -18,4 +18,6 @@ public interface ProductService {
     ProductDto updateProductPrice(Long productId, double price);
 
     boolean checkIfInStock(Long productId, int quantity);
+
+    void removeFromStock(Long productId, int quantity);
 }

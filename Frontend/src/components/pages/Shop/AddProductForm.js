@@ -62,10 +62,8 @@ function LoginForm() {
                             <input type="number" placeholder="Initial Price" required
                                    onChange={(e) => setInitialPrice(e.target.value)}/>
                         </div>
-                        <div className="input-box">
-                            <input type="file" required
-                                   onChange={(e) => setImage(e.target.files[0])}/>
-                        </div>
+                        <input type="file" required
+                               onChange={(e) => setImage(e.target.files[0])}/>
 
                         <button type="submit">Add</button>
                     </form>

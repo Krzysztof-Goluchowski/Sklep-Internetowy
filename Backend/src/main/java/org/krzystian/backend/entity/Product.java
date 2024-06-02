@@ -36,4 +36,8 @@ public class Product {
 
     @Column(name = "units_in_stock")
     private int unitsInStock;
+
+    public void removeUnitsInStock(int quantity) {
+        unitsInStock -= quantity;
+    }
 }

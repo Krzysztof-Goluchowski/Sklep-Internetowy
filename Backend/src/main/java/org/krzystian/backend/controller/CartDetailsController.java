@@ -29,32 +29,14 @@ public class CartDetailsController {
         return ResponseEntity.ok(allCartDetailsDto);
     }
 
-    @PutMapping("/add")
-    public ResponseEntity<CartDetailsDto> addProduct(@RequestBody CartDetailsIdDto cartDetailsIdDto) {
-        CartDetailsDto savedCartDetailsDto = cartDetailsService.addProduct(
-                cartDetailsIdDto.getUserId(), cartDetailsIdDto.getProductId());
-        return ResponseEntity.ok(savedCartDetailsDto);
-    }
-
-    @PutMapping("/remove")
-    public ResponseEntity<CartDetailsDto> removeProduct(@RequestBody CartDetailsIdDto cartDetailsIdDto) {
-        CartDetailsDto savedCartDetailsDto = cartDetailsService.removeProduct(
-                cartDetailsIdDto.getUserId(), cartDetailsIdDto.getProductId());
-        return ResponseEntity.ok(savedCartDetailsDto);
-    }
-
     @PutMapping("/set")
     public ResponseEntity<?> setProductQuantity(
             @RequestBody CartDetailsIdDto cartDetailsIdDto,
             @RequestParam int quantity) {
 
-        boolean isInStock = productService.checkIfInStock(cartDetailsIdDto.getProductId(), quantity);
-        if (isInStock){
-            CartDetailsDto savedCartDetailsDto = cartDetailsService.setProductQuantity(
-                    cartDetailsIdDto.getUserId(), cartDetailsIdDto.getProductId(), quantity);
-            return ResponseEntity.ok(savedCartDetailsDto);
-        }
-        return ResponseEntity.badRequest().body("The requested quantity exceeds the available stock");
+        CartDetailsDto savedCartDetailsDto = cartDetailsService.setProductQuantity(
+                cartDetailsIdDto.getUserId(), cartDetailsIdDto.getProductId(), quantity);
+        return ResponseEntity.ok(savedCartDetailsDto);
 
     }
 }

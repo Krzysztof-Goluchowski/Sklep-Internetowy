@@ -30,14 +30,4 @@ public class CartDetails {
 
     @Column(name = "quantity")
     private Integer quantity;
-
-    public void incrementQuantity() {
-        quantity++;
-    }
-
-    public int decrementQuantity() {
-        if (quantity > 0)
-            quantity--;
-        return quantity;
-    }
 }

@@ -15,6 +15,10 @@ export const CartItem = (props) => {
         updateCartItemCount(quantity + 1, product.id);
     };
 
+    const handleDecrement = () => {
+        updateCartItemCount(quantity - 1, product.id);
+    };
+
     return (
         <div className="cartItem">
             <img src={`data:image/png;base64,${product.image}`}/>
@@ -22,10 +26,18 @@ export const CartItem = (props) => {
                 <p><b>{product.name}</b></p>
                 <p>${product.price}</p>
                 <div className="countHandler">
-                    <button onClick={() => removeFromCart(product.id)}>-</button>
+                    <button onClick={handleDecrement}>-</button>
                     <input value={quantity} onChange={(e) => updateCartItemCount(Number(e.target.value), product.id)}/>
                     <button onClick={handleIncrement}>+</button>
                 </div>
+                { product.unitsInStock < quantity ? (
+                    <div className="stock-signal">
+                        Sorry, we don't have that much!
+                    </div>
+                ) : (
+                    <div className="stock-signal"></div>
+                )
+                }
             </div>
         </div>
     );

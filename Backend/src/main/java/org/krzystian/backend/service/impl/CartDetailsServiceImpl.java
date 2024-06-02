@@ -36,41 +36,13 @@ public class CartDetailsServiceImpl implements CartDetailsService {
     }
 
     @Override
-    public CartDetailsDto addProduct(Long userId, Long productId) {
-        CartDetails cartDetails = findCartDetailsOrNew(userId, productId);
-
-        cartDetails.incrementQuantity();
-
-        CartDetails savedCartDetails = cartDetailsRepository.save(cartDetails);
-
-        return CartDetailsMapper.mapToCartDetailsDto(savedCartDetails);
-    }
-
-    @Override
-    public CartDetailsDto removeProduct(Long userId, Long productId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User with given id doesn't exist!"));
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new ResourceNotFoundException("Product with given id doesn't exist!"));
-
-        CartDetailsId cartId = new CartDetailsId(user.getId(), product.getId());
-
-        CartDetails cartDetails = cartDetailsRepository.findById(cartId)
-                .orElseThrow(() -> new ResourceNotFoundException(("No such data in the cart!")));
-
-        int updatedQuantity = cartDetails.decrementQuantity();
-        if (updatedQuantity == 0) {
-            cartDetailsRepository.delete(cartDetails);
-            return null;
-        } else {
-            CartDetails savedCartDetails = cartDetailsRepository.save(cartDetails);
-            return CartDetailsMapper.mapToCartDetailsDto(savedCartDetails);
-        }
-    }
-
-    @Override
     public CartDetailsDto setProductQuantity(Long userId, Long productId, int quantity) {
         CartDetails cartDetails = findCartDetailsOrNew(userId, productId);
+
+        if (quantity == 0) {
+            cartDetailsRepository.delete(cartDetails);
+            return null;
+        }
 
         cartDetails.setQuantity(quantity);
 
@@ -108,6 +80,12 @@ public class CartDetailsServiceImpl implements CartDetailsService {
                 .map(cartDetailsDto -> mapCartDetailsToOrderDetailsDto(
                         cartDetailsDto, orderDto))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void emptyCart(Long userId) {
+        List<CartDetails> allCartDetails = cartDetailsRepository.findByCartIdUserId(userId);
+        cartDetailsRepository.deleteAll(allCartDetails);
     }
 
     private OrderDetailsDto mapCartDetailsToOrderDetailsDto(
