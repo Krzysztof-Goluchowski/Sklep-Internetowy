@@ -34,13 +34,9 @@ public class CartDetailsController {
             @RequestBody CartDetailsIdDto cartDetailsIdDto,
             @RequestParam int quantity) {
 
-        boolean isInStock = productService.checkIfInStock(cartDetailsIdDto.getProductId(), quantity);
-        if (isInStock){
-            CartDetailsDto savedCartDetailsDto = cartDetailsService.setProductQuantity(
-                    cartDetailsIdDto.getUserId(), cartDetailsIdDto.getProductId(), quantity);
-            return ResponseEntity.ok(savedCartDetailsDto);
-        }
-        return ResponseEntity.badRequest().body("The requested quantity exceeds the available stock");
+        CartDetailsDto savedCartDetailsDto = cartDetailsService.setProductQuantity(
+                cartDetailsIdDto.getUserId(), cartDetailsIdDto.getProductId(), quantity);
+        return ResponseEntity.ok(savedCartDetailsDto);
 
     }
 }

@@ -39,6 +39,11 @@ public class CartDetailsServiceImpl implements CartDetailsService {
     public CartDetailsDto setProductQuantity(Long userId, Long productId, int quantity) {
         CartDetails cartDetails = findCartDetailsOrNew(userId, productId);
 
+        if (quantity == 0) {
+            cartDetailsRepository.delete(cartDetails);
+            return null;
+        }
+
         cartDetails.setQuantity(quantity);
 
         CartDetails savedCartDetails = cartDetailsRepository.save(cartDetails);
