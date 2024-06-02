@@ -36,10 +36,12 @@ public class OrderServiceImpl implements OrderService {
     public OrderDetailsDto createOrderDetails(OrderDetailsDto orderDetailsDto) {
         OrderDetails createdOrderDetails =
                 OrderDetailsMapper.mapToOrderDetails(orderDetailsDto);
+
         Order order = orderRepository
                 .findById(orderDetailsDto.getOrderId())
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Order with given id doesn't exist!"));
+
         createdOrderDetails.setOrder(order);
         Product product = productRepository
                 .findById(orderDetailsDto.getProductId())

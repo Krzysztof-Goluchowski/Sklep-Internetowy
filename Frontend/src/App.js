@@ -11,6 +11,7 @@ import Shop from './components/pages/Shop/Shop';
 import Trainers from './components/pages/Trainers/Trainers';
 import ShopEdit from './components/pages/Shop/ShopEdit';
 import ShopAdd from './components/pages/Shop/AddProductForm';
+import Checkout from './components/pages/Cart/CheckoutForm';
 import AnnualReport from './components/pages/Shop/AnnualReport';
 import Login from './components/pages/userAuthentication/Login';
 import Register from './components/pages/userAuthentication/Register';
@@ -29,6 +30,7 @@ function App() {
                 <Route path="shop/edit" element={<ShopEdit />} />
                 <Route path="shop/add" element={<ShopAdd />} />
                 <Route path="shop/raport" element={<AnnualReport />} />
+                <Route path="cart/checkout" element={<Checkout />} />
                 <Route path="trainers" element={<Trainers />} />
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
