@@ -48,6 +48,12 @@ public class ProductController {
         return ResponseEntity.ok(productDto);
     }
 
+//    @GetMapping("/{id}")
+//    public ResponseEntity<ProductDto> getProductById(@PathVariable("id") Long productId){
+//        ProductDto productDto = productService.getProductById(productId);
+//        return ResponseEntity.ok(productDto);
+//    }
+
     @GetMapping("/all")
     public ResponseEntity<List<ProductDto>> getAllProducts(){
         List<ProductDto> products = productService.getAllProducts();

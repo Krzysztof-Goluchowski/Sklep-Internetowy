@@ -30,6 +30,14 @@ export const CartItem = (props) => {
                     <input value={quantity} onChange={(e) => updateCartItemCount(Number(e.target.value), product.id)}/>
                     <button onClick={handleIncrement}>+</button>
                 </div>
+                { product.unitsInStock < quantity ? (
+                    <div className="stock-signal">
+                        Sorry, we don't have that much!
+                    </div>
+                ) : (
+                    <div className="stock-signal"></div>
+                )
+                }
             </div>
         </div>
     );
