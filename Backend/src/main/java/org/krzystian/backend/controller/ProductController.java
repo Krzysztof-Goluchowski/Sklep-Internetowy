@@ -42,22 +42,10 @@ public class ProductController {
         return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ProductDto> getProductById(@PathVariable("id") Long productId){
-        ProductDto productDto = productService.getProductById(productId);
-        return ResponseEntity.ok(productDto);
-    }
-
     @GetMapping("/all")
     public ResponseEntity<List<ProductDto>> getAllProducts(){
         List<ProductDto> products = productService.getAllProducts();
         return ResponseEntity.ok(products);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<ProductDto> updateProduct(@PathVariable("id") Long productId, @RequestBody ProductDto updatedProduct){
-        ProductDto productDto = productService.updateProduct(productId, updatedProduct);
-        return ResponseEntity.ok(productDto);
     }
 
     @DeleteMapping("/{id}")
