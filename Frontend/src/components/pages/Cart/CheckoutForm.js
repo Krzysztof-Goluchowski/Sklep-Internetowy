@@ -38,6 +38,7 @@ function CheckoutForm() {
                 customerId: localStorage.getItem('loggedUserId')
             });
             alert(response.data);
+            navigate("/shop");
         } catch (error) {
             alert(error.response.data);
         }
