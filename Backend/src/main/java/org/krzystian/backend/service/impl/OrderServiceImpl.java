@@ -39,6 +39,10 @@ public class OrderServiceImpl implements OrderService {
     public String placeOrder(OrderDto orderDto){
         List<CartDetailsDto> allCartDetailsDto = cartDetailsService.getCartDetailsByUserId(orderDto.getCustomerId());
 
+        if (allCartDetailsDto == null || allCartDetailsDto.isEmpty()) {
+            return "Pusty koszyk!";
+        }
+
         if (!checkAllProductsInStock(allCartDetailsDto)){
             return "Nie ma takiej ilości w magazynie";
         }
