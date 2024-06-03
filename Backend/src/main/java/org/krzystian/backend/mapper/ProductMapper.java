@@ -7,7 +7,7 @@ public class ProductMapper {
     public static ProductDto mapToProductDto(Product product){
         return new ProductDto(
                 product.getId(),
-                product.getCategoryID(),
+                CategoryMapper.mapToCategoryDto(product.getCategory()),
                 product.getName(),
                 product.getPrice(),
                 product.getInitialPrice(),
@@ -19,7 +19,7 @@ public class ProductMapper {
     public static Product mapToProduct(ProductDto productDto){
         return new Product(
                 productDto.getId(),
-                productDto.getCategoryID(),
+                CategoryMapper.mapToCategory(productDto.getCategory()),
                 productDto.getName(),
                 productDto.getPrice(),
                 productDto.getInitialPrice(),

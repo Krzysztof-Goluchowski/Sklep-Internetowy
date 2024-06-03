@@ -34,8 +34,10 @@ function ShopContent() {
 
     const filteredProducts = selectedCategory === "Wszystko"
         ? products
-        : products.filter(product => product.categoryID === categories.find(category =>
-            category.name === selectedCategory).id);
+        : products.filter(product => {
+            const category = categories.find(category => category.name === selectedCategory);
+            return category ? product.category.id === category.id : false;
+        });
 
     return (
         <div className="shopContainer">

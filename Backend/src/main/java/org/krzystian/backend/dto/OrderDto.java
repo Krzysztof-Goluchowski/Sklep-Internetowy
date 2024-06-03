@@ -23,5 +23,5 @@ public class OrderDto {
     private String shipPostalCode;
     private String  shipAddress;
     private String  customersPhone;
-    private Long customerId;
+    private UserDto customer;
 }

@@ -7,14 +7,14 @@ import org.krzystian.backend.entity.Product;
 public class CategoryMapper {
     public static CategoryDto mapToCategoryDto(Category category){
         return new CategoryDto(
-                category.getCategory_id(),
+                category.getId(),
                 category.getName()
         );
     }
 
     public static Category mapToCategory(CategoryDto categoryDto){
         return new Category(
-                categoryDto.getCategory_id(),
+                categoryDto.getId(),
                 categoryDto.getName()
         );
     }

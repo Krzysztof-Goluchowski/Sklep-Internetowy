@@ -35,7 +35,9 @@ function CheckoutForm() {
                 shipPostalCode: shipPostalCode,
                 shipAddress: shipAddress,
                 customersPhone: customersPhone,
-                customerId: localStorage.getItem('loggedUserId')
+                customer: {
+                    id: localStorage.getItem('loggedUserId')
+                }
             });
             alert(response.data);
             navigate("/shop");

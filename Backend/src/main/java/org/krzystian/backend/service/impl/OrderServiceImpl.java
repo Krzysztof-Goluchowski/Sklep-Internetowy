@@ -37,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @Override
     public String placeOrder(OrderDto orderDto){
-        List<CartDetailsDto> allCartDetailsDto = cartDetailsService.getCartDetailsByUserId(orderDto.getCustomerId());
+        List<CartDetailsDto> allCartDetailsDto = cartDetailsService.getCartDetailsByUserId(orderDto.getCustomer().getId());
 
         if (allCartDetailsDto == null || allCartDetailsDto.isEmpty()) {
             return "Pusty koszyk!";
@@ -58,7 +58,7 @@ public class OrderServiceImpl implements OrderService {
             productService.removeFromStock(cartDetailsDto.getProductId(), cartDetailsDto.getQuantity());
         }
 
-        cartDetailsService.emptyCart(orderDto.getCustomerId());
+        cartDetailsService.emptyCart(orderDto.getCustomer().getId());
 
         return "Pomyslnie zlozono zamowienie!";
     }

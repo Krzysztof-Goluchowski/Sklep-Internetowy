@@ -1,6 +1,8 @@
 package org.krzystian.backend.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
+import org.krzystian.backend.dto.CategoryDto;
 import org.krzystian.backend.dto.ProductDto;
 import org.krzystian.backend.service.ProductService;
 import org.krzystian.backend.service.UserService;
@@ -21,13 +23,20 @@ public class ProductController {
 
     @PostMapping("/add")
     public ResponseEntity<ProductDto> createProduct(@RequestParam("image") MultipartFile image,
-                                                    @RequestParam("category_id") Long categoryId,
+                                                    @RequestParam("category") String categoryJson,
                                                     @RequestParam("name") String name,
                                                     @RequestParam("price") double price,
                                                     @RequestParam("initial_price") double initialPrice) {
-        System.out.println(categoryId + " " + name + " " + price + " " + initialPrice);
+
+        CategoryDto categoryDto;
+        try {
+            categoryDto = new ObjectMapper().readValue(categoryJson, CategoryDto.class);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         ProductDto productDto = new ProductDto();
-        productDto.setCategoryID(categoryId);
+        productDto.setCategory(categoryDto);
         productDto.setName(name);
         productDto.setPrice(price);
         productDto.setInitialPrice(initialPrice);
