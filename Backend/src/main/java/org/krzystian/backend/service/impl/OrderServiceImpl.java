@@ -54,13 +54,6 @@ public class OrderServiceImpl implements OrderService {
 
         allOrderDetailsDto.forEach(this::createOrderDetails);
 
-//        try {
-//            Thread.sleep(10 * 1000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//            throw new RuntimeException();
-//        }
-
         for (CartDetailsDto cartDetailsDto : allCartDetailsDto) {
             productService.removeFromStock(cartDetailsDto.getProductId(), cartDetailsDto.getQuantity());
         }
@@ -103,9 +96,7 @@ public class OrderServiceImpl implements OrderService {
                         "Product with given id doesn't exist!"));
         createdOrderDetails.setProduct(product);
 
-        OrderDetails savedOrderDetails = orderDetailsRepository.save(createdOrderDetails);
-
-        OrderDetailsMapper.mapToOrderDetailsDto(savedOrderDetails);
+        orderDetailsRepository.save(createdOrderDetails);
     }
 
     @Override

@@ -48,9 +48,7 @@ public class ProductServiceImpl implements ProductService {
 
         product.setPrice(price);
 
-        Product savedProduct = productRepository.save(product);
-
-        ProductMapper.mapToProductDto(savedProduct);
+        productRepository.save(product);
     }
 
     @Override

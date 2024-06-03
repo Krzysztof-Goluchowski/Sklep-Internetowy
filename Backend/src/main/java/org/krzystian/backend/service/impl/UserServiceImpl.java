@@ -1,5 +1,6 @@
 package org.krzystian.backend.service.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.krzystian.backend.dto.UserDto;
 import org.krzystian.backend.entity.User;
@@ -22,14 +23,6 @@ public class UserServiceImpl implements UserService {
         User user = UsersMapper.mapToUser(userDto);
         User savedUser = userRepository.save(user);
         UsersMapper.mapToUserDto(savedUser);
-    }
-
-    @Override
-    public void deleteUser(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User with given id don't exists"));
-
-        userRepository.deleteById(userId);
     }
 
     @Override
