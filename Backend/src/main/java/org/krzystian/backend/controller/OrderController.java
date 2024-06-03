@@ -11,10 +11,14 @@ import org.krzystian.backend.mapper.OrderMapper;
 import org.krzystian.backend.service.CartDetailsService;
 import org.krzystian.backend.service.OrderService;
 import org.krzystian.backend.service.ProductService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 @AllArgsConstructor
 @RestController
@@ -23,37 +27,20 @@ import java.util.List;
 public class OrderController {
 
     private OrderService orderService;
-    private CartDetailsService cartDetailsService;
-    private ProductService productService;
+
+    private final Lock orderLock = new ReentrantLock();
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleRuntimeException(RuntimeException e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong :(");
+    }
 
     @PutMapping("/place")
     public ResponseEntity<String> placeOrder(@RequestBody OrderDto orderDto) {
-
-        List<CartDetailsDto> allCartDetailsDto =
-                cartDetailsService.getCartDetailsByUserId(orderDto.getCustomerId());
-
-        for (CartDetailsDto cartDetailsDto : allCartDetailsDto) {
-            if (!productService.checkIfInStock(
-                    cartDetailsDto.getProductId(), cartDetailsDto.getQuantity())) {
-                return ResponseEntity.ok("Brak takiej liczby produktow na stanie!");
-            }
-        }
-
-        OrderDto savedOrderDto = orderService.createOrder(orderDto);
-        List<OrderDetailsDto> allOrderDetailsDto =
-                cartDetailsService.mapAllCartDetailsToOrderDetailsDto(allCartDetailsDto, savedOrderDto);
-
-        allOrderDetailsDto
-                .forEach(orderDetails -> orderService.createOrderDetails(orderDetails));
-
-        for (CartDetailsDto cartDetailsDto : allCartDetailsDto) {
-            productService.removeFromStock(
-                    cartDetailsDto.getProductId(), cartDetailsDto.getQuantity());
-        }
-
-        cartDetailsService.emptyCart(orderDto.getCustomerId());
-
-        return ResponseEntity.ok("Pomyslnie zlozono zamowienie!");
+        orderLock.lock();
+        String response = orderService.placeOrder(orderDto);
+        orderLock.unlock();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/monthly-report")

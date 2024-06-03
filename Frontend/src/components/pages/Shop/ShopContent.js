@@ -34,8 +34,10 @@ function ShopContent() {
 
     const filteredProducts = selectedCategory === "Wszystko"
         ? products
-        : products.filter(product => product.categoryID === categories.find(category =>
-            category.name === selectedCategory).id);
+        : products.filter(product => {
+            const category = categories.find(category => category.name === selectedCategory);
+            return category ? product.category.id === category.id : false;
+        });
 
     return (
         <div className="shopContainer">
@@ -55,7 +57,9 @@ function ShopContent() {
                 {filteredProducts.map((product) => (
                     <div key={product.id} className="productShop">
                         <img src={`data:image/png;base64,${product.image}`} alt={product.name} className="productPhoto" />
-                        <p className="price">{product.name}</p>
+                        <div className="name-container">
+                            <p className="price">{product.name}</p>
+                        </div>
                         {product.price >= product.initialPrice ? (
                             <p className="price">{`$${product.initialPrice}`}</p>
                         ) : (

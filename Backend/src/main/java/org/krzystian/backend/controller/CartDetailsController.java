@@ -7,6 +7,7 @@ import org.krzystian.backend.dto.UserDto;
 import org.krzystian.backend.dto.embedded.CartDetailsIdDto;
 import org.krzystian.backend.entity.CartDetails;
 import org.krzystian.backend.entity.embedded.CartDetailsId;
+import org.krzystian.backend.exception.ResourceNotFoundException;
 import org.krzystian.backend.service.CartDetailsService;
 import org.krzystian.backend.service.ProductService;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,7 @@ public class CartDetailsController {
 
         CartDetailsDto savedCartDetailsDto = cartDetailsService.setProductQuantity(
                 cartDetailsIdDto.getUserId(), cartDetailsIdDto.getProductId(), quantity);
+
         return ResponseEntity.ok(savedCartDetailsDto);
 
     }

@@ -7,8 +7,8 @@ import org.krzystian.backend.entity.Order;
 import java.util.List;
 
 public interface OrderService {
-    OrderDto createOrder(OrderDto orderDto);
-    OrderDetailsDto createOrderDetails(OrderDetailsDto orderDetailsDto);
     List<Object[]> getOrderValuesByMonthLastYear();
     List<Object[]> getCurrentYearSalesData();
+
+    String placeOrder(OrderDto orderDto);
 }

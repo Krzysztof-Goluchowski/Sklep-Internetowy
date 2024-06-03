@@ -1,10 +1,7 @@
 package org.krzystian.backend.mapper;
 
-import org.krzystian.backend.dto.CartDetailsDto;
 import org.krzystian.backend.dto.OrderDto;
 import org.krzystian.backend.entity.Order;
-
-import java.util.List;
 
 public class OrderMapper {
     public static OrderDto mapToOrderDto(Order order) {
@@ -15,7 +12,7 @@ public class OrderMapper {
                 order.getShipPostalCode(),
                 order.getShipAddress(),
                 order.getCustomersPhone(),
-                order.getCustomerId()
+                UsersMapper.mapToUserDto(order.getCustomer())
         );
     }
 
@@ -27,7 +24,7 @@ public class OrderMapper {
                 orderDto.getShipPostalCode(),
                 orderDto.getShipAddress(),
                 orderDto.getCustomersPhone(),
-                orderDto.getCustomerId()
+                UsersMapper.mapToUser(orderDto.getCustomer())
         );
     }
 }

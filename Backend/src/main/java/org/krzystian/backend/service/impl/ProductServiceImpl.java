@@ -9,10 +9,6 @@ import org.krzystian.backend.repository.ProductRepository;
 import org.krzystian.backend.service.ProductService;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.ReadOnlyBufferException;
-import java.nio.file.Files;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,33 +26,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto getProductById(Long productId) {
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new ResourceNotFoundException("Product with given ID doesn't exist"));
-        return ProductMapper.mapToProductDto(product);
-    }
-
-    @Override
     public List<ProductDto> getAllProducts() {
         List<Product> products = productRepository.findAll();
         return products.stream()
                 .map(ProductMapper::mapToProductDto)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public ProductDto updateProduct(Long productId, ProductDto updatedProduct) {
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new ResourceNotFoundException("Product with given ID doesn't exist"));
-
-        product.setName(updatedProduct.getName());
-        product.setPrice(updatedProduct.getPrice());
-        product.setInitialPrice(updatedProduct.getInitialPrice());
-        product.setImage(updatedProduct.getImage());
-
-        Product savedProduct = productRepository.save(product);
-
-        return ProductMapper.mapToProductDto(savedProduct);
     }
 
     @Override
@@ -68,15 +42,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto updateProductPrice(Long productId, double price) {
+    public void updateProductPrice(Long productId, double price) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product with given ID doesn't exist!"));
 
         product.setPrice(price);
 
-        Product savedProduct = productRepository.save(product);
-
-        return ProductMapper.mapToProductDto(savedProduct);
+        productRepository.save(product);
     }
 
     @Override

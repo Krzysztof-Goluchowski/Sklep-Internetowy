@@ -36,6 +36,7 @@ public class Order {
     @Column(name = "customersphone")
     private String  customersPhone;
 
-    @Column(name = "customer_id")
-    private Long customerId;
+    @ManyToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "user_id")
+    private User customer;
 }

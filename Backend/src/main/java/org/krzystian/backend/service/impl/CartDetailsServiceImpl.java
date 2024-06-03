@@ -1,5 +1,6 @@
 package org.krzystian.backend.service.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.krzystian.backend.dto.CartDetailsDto;
 import org.krzystian.backend.dto.OrderDetailsDto;
@@ -21,7 +22,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-//@AllArgsConstructor
 public class CartDetailsServiceImpl implements CartDetailsService {
 
     private final CartDetailsRepository cartDetailsRepository;
@@ -35,6 +35,7 @@ public class CartDetailsServiceImpl implements CartDetailsService {
         this.productRepository = productRepository;
     }
 
+    @Transactional
     @Override
     public CartDetailsDto setProductQuantity(Long userId, Long productId, int quantity) {
         CartDetails cartDetails = findCartDetailsOrNew(userId, productId);
@@ -85,6 +86,10 @@ public class CartDetailsServiceImpl implements CartDetailsService {
     @Override
     public void emptyCart(Long userId) {
         List<CartDetails> allCartDetails = cartDetailsRepository.findByCartIdUserId(userId);
+
+//        if (true)
+//            throw new ResourceNotFoundException("jakis niechciany blad");
+
         cartDetailsRepository.deleteAll(allCartDetails);
     }
 

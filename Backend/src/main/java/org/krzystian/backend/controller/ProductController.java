@@ -1,6 +1,8 @@
 package org.krzystian.backend.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
+import org.krzystian.backend.dto.CategoryDto;
 import org.krzystian.backend.dto.ProductDto;
 import org.krzystian.backend.service.ProductService;
 import org.krzystian.backend.service.UserService;
@@ -21,13 +23,20 @@ public class ProductController {
 
     @PostMapping("/add")
     public ResponseEntity<ProductDto> createProduct(@RequestParam("image") MultipartFile image,
-                                                    @RequestParam("category_id") Long categoryId,
+                                                    @RequestParam("category") String categoryJson,
                                                     @RequestParam("name") String name,
                                                     @RequestParam("price") double price,
                                                     @RequestParam("initial_price") double initialPrice) {
-        System.out.println(categoryId + " " + name + " " + price + " " + initialPrice);
+
+        CategoryDto categoryDto;
+        try {
+            categoryDto = new ObjectMapper().readValue(categoryJson, CategoryDto.class);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         ProductDto productDto = new ProductDto();
-        productDto.setCategoryID(categoryId);
+        productDto.setCategory(categoryDto);
         productDto.setName(name);
         productDto.setPrice(price);
         productDto.setInitialPrice(initialPrice);
@@ -42,28 +51,10 @@ public class ProductController {
         return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ProductDto> getProductById(@PathVariable("id") Long productId){
-        ProductDto productDto = productService.getProductById(productId);
-        return ResponseEntity.ok(productDto);
-    }
-
-//    @GetMapping("/{id}")
-//    public ResponseEntity<ProductDto> getProductById(@PathVariable("id") Long productId){
-//        ProductDto productDto = productService.getProductById(productId);
-//        return ResponseEntity.ok(productDto);
-//    }
-
     @GetMapping("/all")
     public ResponseEntity<List<ProductDto>> getAllProducts(){
         List<ProductDto> products = productService.getAllProducts();
         return ResponseEntity.ok(products);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<ProductDto> updateProduct(@PathVariable("id") Long productId, @RequestBody ProductDto updatedProduct){
-        ProductDto productDto = productService.updateProduct(productId, updatedProduct);
-        return ResponseEntity.ok(productDto);
     }
 
     @DeleteMapping("/{id}")
