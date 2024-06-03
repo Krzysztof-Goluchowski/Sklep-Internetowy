@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
 import { FaUser, FaLock } from "react-icons/fa";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import axios from 'axios';
 import {ShopContext} from "../Shop/shop-context";
 
@@ -9,6 +9,8 @@ function LoginForm() {
     const [password, setPassword] = useState('');
 
     const { fetchCartItems } = useContext(ShopContext);
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -23,6 +25,7 @@ function LoginForm() {
             localStorage.setItem('isEmployee', isEmployee);
             localStorage.setItem('loggedUserId', loggedUserId);
             fetchCartItems();
+            navigate("/");
         } catch (error) {
             alert(error.response.data);
         }

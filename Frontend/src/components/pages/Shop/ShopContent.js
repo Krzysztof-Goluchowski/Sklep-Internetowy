@@ -55,7 +55,9 @@ function ShopContent() {
                 {filteredProducts.map((product) => (
                     <div key={product.id} className="productShop">
                         <img src={`data:image/png;base64,${product.image}`} alt={product.name} className="productPhoto" />
-                        <p className="price">{product.name}</p>
+                        <div className="name-container">
+                            <p className="price">{product.name}</p>
+                        </div>
                         {product.price >= product.initialPrice ? (
                             <p className="price">{`$${product.initialPrice}`}</p>
                         ) : (

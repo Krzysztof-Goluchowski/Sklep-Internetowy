@@ -1,16 +1,30 @@
-import React, {useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import NavHeader from "../../layout/header/NavHeader";
 import Logo from "../../layout/header/Logo";
 import NavBar from "../../layout/header/NavBar";
 import Temporary from "../../layout/Temporary";
 import Footer from "../../layout/Footer";
+import {useNavigate} from "react-router-dom";
+import {ShopContext} from "../Shop/shop-context";
 
 function CheckoutForm() {
     const [shipCity, setShipCity] = useState('');
     const [shipPostalCode, setShipPostalCode] = useState('');
     const [shipAddress, setShipAddress] = useState('');
     const [customersPhone, setCustomersPhone] = useState('');
+
+    const navigate = useNavigate();
+
+    const { products, fetchProducts } = useContext(ShopContext);
+
+    const loggedIn = localStorage.getItem('isLoggedIn');
+
+    useEffect(() => {
+        if (loggedIn !== 'true') {
+            navigate("/shop");
+        }
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -24,6 +38,7 @@ function CheckoutForm() {
                 customerId: localStorage.getItem('loggedUserId')
             });
             alert(response.data);
+            navigate("/shop");
         } catch (error) {
             alert(error.response.data);
         }

@@ -13,11 +13,13 @@ function ShopContentEdit() {
 
     const { products, fetchProducts } = useContext(ShopContext);
 
-    if (localStorage.getItem('isEmployee') !== 'true') {
-        navigate("/shop");
-    }
+    const isEmployee = localStorage.getItem('isEmployee');
 
     useEffect(() => {
+        if (isEmployee !== 'true') {
+            navigate("/shop");
+        }
+
         fetchProducts();
     }, []);
 
