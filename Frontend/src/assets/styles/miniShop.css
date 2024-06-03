@@ -26,6 +26,11 @@
     margin: 10px;
 }
 
+.name-container {
+    display: flex;
+    height: 50%;
+}
+
 .button-style {
     height: 100%;
     width: 60%;
