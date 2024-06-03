@@ -25,8 +25,6 @@ import java.util.List;
 public class OrderController {
 
     private OrderService orderService;
-    private CartDetailsService cartDetailsService;
-    private ProductService productService;
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<String> handleRuntimeException(RuntimeException e) {
@@ -34,34 +32,9 @@ public class OrderController {
     }
 
     @PutMapping("/place")
-    @Transactional
     public ResponseEntity<String> placeOrder(@RequestBody OrderDto orderDto) {
-
-            List<CartDetailsDto> allCartDetailsDto =
-                    cartDetailsService.getCartDetailsByUserId(orderDto.getCustomerId());
-
-            for (CartDetailsDto cartDetailsDto : allCartDetailsDto) {
-                if (!productService.checkIfInStock(
-                        cartDetailsDto.getProductId(), cartDetailsDto.getQuantity())) {
-                    return ResponseEntity.ok("Brak takiej liczby produktow na stanie!");
-                }
-            }
-
-            OrderDto savedOrderDto = orderService.createOrder(orderDto);
-            List<OrderDetailsDto> allOrderDetailsDto =
-                    cartDetailsService.mapAllCartDetailsToOrderDetailsDto(allCartDetailsDto, savedOrderDto);
-
-            allOrderDetailsDto
-                    .forEach(orderDetails -> orderService.createOrderDetails(orderDetails));
-
-            for (CartDetailsDto cartDetailsDto : allCartDetailsDto) {
-                productService.removeFromStock(
-                        cartDetailsDto.getProductId(), cartDetailsDto.getQuantity());
-            }
-
-            cartDetailsService.emptyCart(orderDto.getCustomerId());
-
-            return ResponseEntity.ok("Pomyslnie zlozono zamowienie!");
+        String response = orderService.placeOrder(orderDto);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/monthly-report")

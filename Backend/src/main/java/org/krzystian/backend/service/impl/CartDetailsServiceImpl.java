@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-//@AllArgsConstructor
 public class CartDetailsServiceImpl implements CartDetailsService {
 
     private final CartDetailsRepository cartDetailsRepository;
@@ -86,8 +85,8 @@ public class CartDetailsServiceImpl implements CartDetailsService {
     public void emptyCart(Long userId) {
         List<CartDetails> allCartDetails = cartDetailsRepository.findByCartIdUserId(userId);
 
-        if (true)
-            throw new ResourceNotFoundException("jakis niechciany blad");
+//        if (true)
+//            throw new ResourceNotFoundException("jakis niechciany blad");
 
         cartDetailsRepository.deleteAll(allCartDetails);
     }
