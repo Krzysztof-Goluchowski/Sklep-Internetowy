@@ -85,6 +85,10 @@ public class CartDetailsServiceImpl implements CartDetailsService {
     @Override
     public void emptyCart(Long userId) {
         List<CartDetails> allCartDetails = cartDetailsRepository.findByCartIdUserId(userId);
+
+        if (true)
+            throw new ResourceNotFoundException("jakis niechciany blad");
+
         cartDetailsRepository.deleteAll(allCartDetails);
     }
 
