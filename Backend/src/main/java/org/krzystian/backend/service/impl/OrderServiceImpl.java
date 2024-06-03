@@ -20,6 +20,8 @@ import org.krzystian.backend.service.ProductService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 @Service
 @AllArgsConstructor
@@ -47,6 +49,13 @@ public class OrderServiceImpl implements OrderService {
                 cartDetailsService.mapAllCartDetailsToOrderDetailsDto(allCartDetailsDto, savedOrderDto);
 
         allOrderDetailsDto.forEach(this::createOrderDetails);
+
+//        try {
+//            Thread.sleep(10 * 1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//            throw new RuntimeException();
+//        }
 
         for (CartDetailsDto cartDetailsDto : allCartDetailsDto) {
             productService.removeFromStock(cartDetailsDto.getProductId(), cartDetailsDto.getQuantity());

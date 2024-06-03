@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 @AllArgsConstructor
 @RestController
@@ -26,6 +28,8 @@ public class OrderController {
 
     private OrderService orderService;
 
+    private final Lock orderLock = new ReentrantLock();
+
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<String> handleRuntimeException(RuntimeException e) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong :(");
@@ -33,7 +37,9 @@ public class OrderController {
 
     @PutMapping("/place")
     public ResponseEntity<String> placeOrder(@RequestBody OrderDto orderDto) {
+        orderLock.lock();
         String response = orderService.placeOrder(orderDto);
+        orderLock.unlock();
         return ResponseEntity.ok(response);
     }
 
