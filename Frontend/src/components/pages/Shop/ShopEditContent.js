@@ -1,5 +1,6 @@
 import "../../../assets/styles/shop.css";
 import React, {useContext, useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 import {Link} from "react-router-dom";
 import axios from "axios";
 import {ShopContext} from "./shop-context";
@@ -8,7 +9,13 @@ function ShopContentEdit() {
     const [editingIndex, setEditingIndex] = useState(-1);
     const [editedPrice, setEditedPrice] = useState("");
 
+    const navigate = useNavigate();
+
     const { products, fetchProducts } = useContext(ShopContext);
+
+    if (localStorage.getItem('isEmployee') !== 'true') {
+        navigate("/shop");
+    }
 
     useEffect(() => {
         fetchProducts();
