@@ -1,5 +1,6 @@
 package org.krzystian.backend.service.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.krzystian.backend.dto.CartDetailsDto;
 import org.krzystian.backend.dto.OrderDetailsDto;
@@ -34,6 +35,7 @@ public class CartDetailsServiceImpl implements CartDetailsService {
         this.productRepository = productRepository;
     }
 
+    @Transactional
     @Override
     public CartDetailsDto setProductQuantity(Long userId, Long productId, int quantity) {
         CartDetails cartDetails = findCartDetailsOrNew(userId, productId);

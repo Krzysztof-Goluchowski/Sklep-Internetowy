@@ -15,11 +15,10 @@ import java.util.stream.Collectors;
 public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;
 
-
     @Override
     public Map<String, Long> getAllCategories() {
         List<Category> categories = categoryRepository.findAll();
         return categories.stream()
-                .collect(Collectors.toMap(Category::getName, Category::getCategory_id));
+                .collect(Collectors.toMap(Category::getName, Category::getId));
     }
 }

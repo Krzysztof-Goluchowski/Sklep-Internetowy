@@ -19,12 +19,6 @@ public class UserController {
 
     private final UserService userService;
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable("id") Long userId){
-        userService.deleteUser(userId);
-        return ResponseEntity.ok("User deleted successfully!");
-    }
-
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> loginUser(@RequestBody UserDto userDto){
         boolean isEmployee = false;

@@ -37,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @Override
     public String placeOrder(OrderDto orderDto){
-        List<CartDetailsDto> allCartDetailsDto = cartDetailsService.getCartDetailsByUserId(orderDto.getCustomerId());
+        List<CartDetailsDto> allCartDetailsDto = cartDetailsService.getCartDetailsByUserId(orderDto.getCustomer().getId());
 
         if (allCartDetailsDto == null || allCartDetailsDto.isEmpty()) {
             return "Pusty koszyk!";
@@ -54,18 +54,11 @@ public class OrderServiceImpl implements OrderService {
 
         allOrderDetailsDto.forEach(this::createOrderDetails);
 
-//        try {
-//            Thread.sleep(10 * 1000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//            throw new RuntimeException();
-//        }
-
         for (CartDetailsDto cartDetailsDto : allCartDetailsDto) {
             productService.removeFromStock(cartDetailsDto.getProductId(), cartDetailsDto.getQuantity());
         }
 
-        cartDetailsService.emptyCart(orderDto.getCustomerId());
+        cartDetailsService.emptyCart(orderDto.getCustomer().getId());
 
         return "Pomyslnie zlozono zamowienie!";
     }
@@ -103,9 +96,7 @@ public class OrderServiceImpl implements OrderService {
                         "Product with given id doesn't exist!"));
         createdOrderDetails.setProduct(product);
 
-        OrderDetails savedOrderDetails = orderDetailsRepository.save(createdOrderDetails);
-
-        OrderDetailsMapper.mapToOrderDetailsDto(savedOrderDetails);
+        orderDetailsRepository.save(createdOrderDetails);
     }
 
     @Override
