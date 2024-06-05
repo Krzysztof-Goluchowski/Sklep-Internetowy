@@ -504,9 +504,9 @@ SELECT
     SUM(od.quantity * od.unit_price) AS totalValue
 FROM
     orders o
-        JOIN
+JOIN
     order_details od
-    ON
+ON
             o.order_id = od.order_id
 WHERE
         o.orderdate >= DATE_TRUNC('year', CURRENT_DATE) - INTERVAL '1 year'
@@ -525,9 +525,9 @@ SELECT
     SUM(od.quantity * od.unit_price) AS totalValue
 FROM
     orders o
-        JOIN
+JOIN
     order_details od
-    ON
+ON
             o.order_id = od.order_id
 WHERE
         o.orderdate >= DATE_TRUNC('year', CURRENT_DATE)
