@@ -10,7 +10,7 @@
 
 ### Database diagram
  
-![](img/schemat3.jpg)
+![](img/schemat3.png)
 
 ### Data Model
 
