@@ -10,4 +10,4 @@
 
 ---
 
-Kompletna dokumentacja projektu znajduje się w pliku dokumentacja.pdf
+Kompletna dokumentacja projektu znajduje się w pliku `dokumentacja.pdf`
