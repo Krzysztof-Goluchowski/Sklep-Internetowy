@@ -338,7 +338,7 @@ Product updated successfully!
 
 ---
 
->Place Order – PUT „/orders/place” TODO
+>Place Order – PUT „/orders/place”
 
 ![](img/checkout.png)
 
@@ -586,7 +586,8 @@ ORDER BY
 @Transactional
 @Override
 public String placeOrder(OrderDto orderDto){
-    List<CartDetailsDto> allCartDetailsDto = cartDetailsService.getCartDetailsByUserId(orderDto.getCustomerId());
+    List<CartDetailsDto> allCartDetailsDto =     
+        cartDetailsService.getCartDetailsByUserId(orderDto.getCustomerId());
 
     if (!checkAllProductsInStock(allCartDetailsDto)){
         return "Nie ma takiej ilości w magazynie";
@@ -595,12 +596,14 @@ public String placeOrder(OrderDto orderDto){
     OrderDto savedOrderDto = createOrder(orderDto);
 
     List<OrderDetailsDto> allOrderDetailsDto =
-            cartDetailsService.mapAllCartDetailsToOrderDetailsDto(allCartDetailsDto, savedOrderDto);
+        cartDetailsService.
+        mapAllCartDetailsToOrderDetailsDto(allCartDetailsDto, savedOrderDto);
 
     allOrderDetailsDto.forEach(this::createOrderDetails);
 
     for (CartDetailsDto cartDetailsDto : allCartDetailsDto) {
-        productService.removeFromStock(cartDetailsDto.getProductId(), cartDetailsDto.getQuantity());
+        productService.removeFromStock(
+            cartDetailsDto.getProductId(), cartDetailsDto.getQuantity());
     }
 
     cartDetailsService.emptyCart(orderDto.getCustomerId());
@@ -622,7 +625,9 @@ public class OrderController {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<String> handleRuntimeException(RuntimeException e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong :(");
+        return ResponseEntity.
+        status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .body("Something went wrong :(");
     }
 
     // [..]
